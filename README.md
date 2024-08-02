@@ -8,11 +8,14 @@ específicos y categorías.
 
 ## TODO
 
+- [ ] Botón para hacer reset una vez iniciado el temporizador.
+- [ ] Script para autogenerar la variable API_URL.
 - [ ] Mejorar el manejo de errores.
 - [ ] Añadir soporte para login Google Auth.
 - [ ] Optimizar el rendimiento de la extensión.
 - [ ] Agregar pruebas unitarias.
 - [ ] Documentar mejor el código.
+- [ ] Action para autopublicar futuras releases.
 
 ## Características
 
@@ -32,7 +35,7 @@ específicos y categorías.
 ### Clonar el repositorio
 
 ```sh
-git clone https://github.com/tu-usuario/hubplanner-time-tracker-chrome.git
+git clone git@github.com:Secuoyas-Experience/HubPlanner-Time-Tracker-Chrome-Extension.git
 cd hubplanner-time-tracker-chrome
 ```
 

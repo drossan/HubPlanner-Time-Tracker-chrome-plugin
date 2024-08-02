@@ -9,7 +9,7 @@ export default defineConfig({
 		{
 			name: 'custom-copy',
 			writeBundle() {
-				mkdirSync('dist/images', { recursive: true });
+				mkdirSync('dist/images', {recursive: true});
 				copyFileSync('public/manifest.json', 'dist/manifest.json');
 				copyFileSync('public/popup.html', 'dist/popup.html');
 				copyFileSync('public/tracker.html', 'dist/tracker.html');
