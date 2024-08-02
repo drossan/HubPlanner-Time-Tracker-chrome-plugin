@@ -1,0 +1,1 @@
+console.log("Hubplanner Time Tracker content script loaded");
