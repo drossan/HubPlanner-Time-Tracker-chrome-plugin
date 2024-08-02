@@ -20,7 +20,10 @@
 		<img id="startIcon" src="./images/play.png" alt="Play" class="w-4 h-4 mr-2">
 		<span id="timer">00:00</span>
 	</button>
-	<button id="logoutButton" class="w-full p-2 bg-red-500 text-white rounded">Logout</button>
+	<div class="flex justify-end mt-5 w-full">
+		<a href="#" id="resetButton" class="hidden p-2 text-blue-500">Reset</a>
+		<a href="#" id="logoutButton" class="p-2 text-red-500 text-right">Logout</a>
+	</div>
 	<div id="message" class="mt-4 text-center"></div>
 </div>
 <script type="module" src="./src/tracker.js"></script>

@@ -112,7 +112,8 @@
   },
   "scripts": {
     "start": "npx vite build --watch",
-    "build": "npx vite build"
+    "build": "npx vite build",
+    "publish": "npm i && npm run build && zip -q -r dist.zip . "
   },
   "keywords": [],
   "author": "",

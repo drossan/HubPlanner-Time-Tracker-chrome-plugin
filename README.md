@@ -8,6 +8,7 @@ específicos y categorías.
 
 ## TODO
 
+- [ ] Botón para hacer reset una vez iniciado el temporizador.
 - [ ] Mejorar el manejo de errores.
 - [ ] Añadir soporte para login Google Auth.
 - [ ] Optimizar el rendimiento de la extensión.

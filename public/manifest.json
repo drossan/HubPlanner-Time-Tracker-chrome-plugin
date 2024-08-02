@@ -1,12 +1,13 @@
 {
   "manifest_version": 3,
   "name": "HubPlanner Time Tracker",
-  "version": "1.0",
-  "description": "A Chrome extension for tracking time using HubPlanner.",
+  "version": "1.0.0",
+  "description": "Track your time directly from Chrome.",
   "permissions": [
     "storage",
     "activeTab",
-    "scripting"
+    "scripting",
+    "https://gpjw64fugg.execute-api.eu-west-3.amazonaws.com/dev/api/v1"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -29,5 +30,8 @@
       "matches": ["<all_urls>"],
       "js": ["src/content.js"]
     }
+  ],
+  "host_permissions": [
+    "https://gpjw64fugg.execute-api.eu-west-3.amazonaws.com/dev/api/v1"
   ]
 }
