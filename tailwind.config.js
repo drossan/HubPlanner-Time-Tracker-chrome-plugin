@@ -7,7 +7,10 @@ export default {
   theme: {
     extend: {
       width: {
-        '300px': '18.75rem',
+        '400px': '400px',
+      },
+      height: {
+        '450px': '450px',
       }
     }
   },
