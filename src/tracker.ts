@@ -126,6 +126,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 			toggleButtons.forEach(button => {
 				button.addEventListener('click', () => {
 					const toggleId = button.getAttribute('data-toggle');
+					const activeContent = Array.from(toggleContents).find(content => content.getAttribute('data-toggle') === toggleId);
+
+					if (activeContent && !activeContent.classList.contains('hidden')) {
+						return;
+					}
 
 					toggleContents.forEach(content => {
 						if (content.getAttribute('data-toggle') === toggleId) {
