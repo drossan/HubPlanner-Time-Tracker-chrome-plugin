@@ -1,3 +1,5 @@
+import { API_URL, callHubPlannerProxy } from "./utils";
+
 document.addEventListener('DOMContentLoaded', async () => {
 	const projectSearch = document.getElementById('projectSearch') as HTMLInputElement;
 	const projectDropdown = document.getElementById('projectDropdown') as HTMLDivElement;
@@ -82,12 +84,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 					};
 
 					try {
-//						await callHubPlannerProxy(
-//							`${API_URL}/timeentry`,
-//							apiToken,
-//							'POST',
-//							timeEntry
-//						);
+						await callHubPlannerProxy(
+							`${API_URL}/timeentry`,
+							apiToken,
+							'POST',
+							timeEntry
+						);
 						message.textContent = 'Time entry recorded successfully!';
 					} catch (error) {
 						message.textContent = 'Failed to record time entry.';
