@@ -5,27 +5,69 @@
 	<title>Hubplanner Time Tracker</title>
 	<link rel="stylesheet" href="./assets/css.css">
 </head>
-<body class="font-sans bg-gray-100">
-<div class="container mx-auto p-4 w-72">
-	<h2 class="text-2xl font-bold mb-4">Time Tracker</h2>
-	<div class="relative mb-4">
-		<input type="text" id="projectSearch" placeholder="Selecciona un proyecto..." class="w-full p-2 border border-gray-300 rounded">
-		<div id="projectDropdown" class="absolute z-10 bg-white border border-gray-300 rounded w-full mt-1 max-h-60 overflow-y-auto hidden"></div>
-	</div>
-	<div class="relative mb-4">
-		<input type="text" id="categorySearch" placeholder="Selecciona una categoría..." class="w-full p-2 border border-gray-300 rounded">
-		<div id="categoryDropdown" class="absolute z-10 bg-white border border-gray-300 rounded w-full mt-1 max-h-60 overflow-y-auto hidden"></div>
-	</div>
-	<button id="startButton" class="w-full p-2 bg-gray-300 text-white rounded mb-2 flex items-center justify-center">
-		<img id="startIcon" src="./images/play.png" alt="Play" class="w-4 h-4 mr-2">
-		<span id="timer">00:00</span>
-	</button>
-	<div class="flex justify-end mt-5 w-full">
-		<a href="#" id="resetButton" class="hidden p-2 text-blue-500">Reset</a>
-		<a href="#" id="logoutButton" class="p-2 text-red-500 text-right">Logout</a>
-	</div>
-	<div id="message" class="mt-4 text-center"></div>
-</div>
+<body class="font-sans">
+<main class="container mx-auto max-w-sm w-400px h-450px flex flex-col">
+	<section class="px-4 pt-4 mb-2 bg-white">
+		<div class="flex items-center justify-between gap-x-1 w-full pb-2 border-b border-gray-200">
+			<div class="flex items-center justify-center">
+				<img src="images/logo.png" width="30px" height="30px"/>
+				<h2 class="text-base font-bold"> Secuoyas Experience</h2>
+			</div>
+
+			<div class="flex justify-end text-right">
+				<a href="#" id="resetButton" class="hidden p-2 text-blue-500">Reset</a>
+				<a href="#" id="logoutButton" class="p-2 text-red-500 text-right">Logout</a>
+			</div>
+		</div>
+	</section>
+	<section class="px-4 my-2 mx-4 bg-white border rounded overflow-hidden">
+		<div class="my-4 flex justify-between items-center  js-toggle cursor-pointer" data-toggle="timer">
+			<div class="flex items-center gap-x-2">
+				<img src="images/timer.png" alt="timer" width="16px">
+				<span class="text-sm font-medium">Temporizador</span>
+			</div>
+			<div id="wrapperTimer"></div>
+		</div>
+		<div id="timer-wrapper" class="js-toggle-content" data-toggle="timer">
+			<div class="my-4">
+				<div class="relative mb-4">
+					<input type="text" id="projectSearch" placeholder="Selecciona un proyecto..."
+						   class="w-full p-2 border border-gray-300 rounded">
+					<div id="projectDropdown"
+						 class="absolute z-10 bg-white border border-gray-300 rounded w-full mt-1 max-h-60 overflow-y-auto hidden"></div>
+				</div>
+				<div class="relative mb-4">
+					<input type="text" id="categorySearch" placeholder="Selecciona una categoría..."
+						   class="w-full p-2 border border-gray-300 rounded">
+					<div id="categoryDropdown"
+						 class="absolute z-10 bg-white border border-gray-300 rounded w-full mt-1 max-h-60 overflow-y-auto hidden"></div>
+				</div>
+			</div>
+
+			<div class="flex justify-between items-center my-8 relative ">
+				<button id="startButton"
+						class="py-3 px-6 bg-gray-300 text-white rounded-full flex items-center justify-center">
+					<img id="startIcon" src="./images/play.png" alt="Play" class="w-4 h-4 mr-2">
+					<span id="startText" class="text-lg">Iniciar</span>
+				</button>
+
+				<span id="timer" class="text-5xl text-neutral-700 font-light  z-10">00:00</span>
+				<span id="seconds" class="text-8xl text-gray-200 absolute -end-6 z-0">00</span>
+			</div>
+
+			<div id="message" class="mt-4 text-center"></div>
+		</div>
+	</section>
+	<section class="px-4 my-2 mx-4 bg-white border rounded ">
+		<div class="my-4 flex items-center gap-x-2 js-toggle cursor-pointer" data-toggle="recent-task">
+			<img src="images/recent-tasks.png" alt="recent-tasks" width="16px">
+			<span class="text-sm font-medium">Tareas recientes</span>
+		</div>
+		<div id="timerRecentTasksWrapper" class="hidden js-toggle-content" data-toggle="recent-task">
+			<p>WIP</p>
+		</div>
+	</section>
+</main>
 <script type="module" src="./src/tracker.js"></script>
 </body>
 </html>

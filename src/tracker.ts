@@ -7,9 +7,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const categoryDropdown = document.getElementById('categoryDropdown') as HTMLDivElement;
 	const startButton = document.getElementById('startButton') as HTMLButtonElement;
 	const startIcon = document.getElementById('startIcon') as HTMLImageElement;
+	const startText = document.getElementById('startText') as HTMLImageElement;
 	const timer = document.getElementById('timer') as HTMLSpanElement;
+	const timerSeconds = document.getElementById('seconds') as HTMLSpanElement;
 	const logoutButton = document.getElementById('logoutButton') as HTMLButtonElement;
 	const message = document.getElementById('message') as HTMLDivElement;
+
+	const toggleButtons = document.querySelectorAll('.js-toggle') as NodeListOf<HTMLElement>;
+	const toggleContents = document.querySelectorAll('.js-toggle-content') as NodeListOf<HTMLElement>;
 
 	let projects: any[] = [];
 	let categories: any[] = [];
@@ -39,8 +44,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 			startTime = new Date(storedStartTime);
 			startIcon.src = './images/stop.png';
 			updateTimer();
-//			startButton.classList.replace('bg-gray-300', 'bg-red-500');
+			startText.textContent = "Parar";
 			timerInterval = setInterval(updateTimer, 1000);
+
 		}
 
 		try {
@@ -77,6 +83,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 					startTime = null;
 					startIcon.src = './images/play.png';
 					timer.textContent = '00:00';
+					timerSeconds.textContent = "00"
+					startText.textContent = "Iniciar";
 
 					const timeEntry = {
 						project: selectedProject!,
@@ -86,12 +94,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 					};
 
 					try {
-						await callHubPlannerProxy(
-							`${API_URL}/timeentry`,
-							apiToken,
-							'POST',
-							timeEntry
-						);
+//						await callHubPlannerProxy(
+//							`${API_URL}/timeentry`,
+//							apiToken,
+//							'POST',
+//							timeEntry
+//						);
 						message.textContent = 'Time entry recorded successfully!';
 					} catch (error) {
 						message.textContent = 'Failed to record time entry.';
@@ -104,6 +112,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 					startButton.classList.replace('bg-green-500', 'bg-red-500');
 					updateTimer();
 					timerInterval = setInterval(updateTimer, 1000);
+					startText.textContent = "Parar";
 
 					// Guardar el estado del temporizador y el proyecto/categoría seleccionados
 					await chrome.storage.sync.set({
@@ -117,6 +126,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 			logoutButton.addEventListener('click', () => {
 				chrome.storage.sync.remove(['apiToken', 'userEmail', 'startTime', 'selectedProject', 'selectedCategory'], () => {
 					window.location.href = 'popup.html';
+				});
+			});
+
+			logoutButton.addEventListener('click', () => {
+				chrome.storage.sync.remove(['apiToken', 'userEmail', 'startTime', 'selectedProject', 'selectedCategory'], () => {
+					window.location.href = 'popup.html';
+				});
+			});
+
+			toggleButtons.forEach(button => {
+				button.addEventListener('click', () => {
+					const toggleId = button.getAttribute('data-toggle');
+
+					toggleContents.forEach(content => {
+						if (content.getAttribute('data-toggle') === toggleId) {
+							content.classList.toggle('hidden');
+						} else {
+							content.classList.add('hidden');
+						}
+					});
 				});
 			});
 
@@ -211,11 +240,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 		if (startTime) {
 			const now = new Date();
 			const elapsed = Math.floor((now.getTime() - startTime.getTime()) / 1000);
-			const minutes = Math.floor(elapsed / 60);
+			const hours = Math.floor(elapsed / 3600);
+			const minutes = Math.floor((elapsed % 3600) / 60);
 			const seconds = elapsed % 60;
-			timer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+			timer.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+			timerSeconds.textContent = `${String(seconds).padStart(2, '0')}`;
 		}
 	}
+
 
 	function resetForm() {
 		chrome.storage.sync.remove(['startTime', 'selectedProject', 'selectedCategory']);
