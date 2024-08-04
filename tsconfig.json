@@ -12,7 +12,7 @@
     "skipLibCheck": true,
     "types": ["chrome"],
     "paths": {
-      "@projectTypes": ["types.d.ts"],
+      "@projectTypes": ["./types.d.ts"],
     }
   },
   "include": [
