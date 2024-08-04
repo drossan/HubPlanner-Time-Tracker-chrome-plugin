@@ -20,27 +20,30 @@
 			</div>
 		</div>
 	</section>
-	<section class="px-4 my-2 mx-4 bg-white border rounded overflow-hidden">
+	<section class="px-4 my-2 mx-4 bg-white border rounded">
 		<div class="my-4 flex justify-between items-center  js-toggle cursor-pointer" data-toggle="timer">
 			<div class="flex items-center gap-x-2">
 				<img src="images/timer.png" alt="timer" width="16px">
 				<span class="text-sm font-medium">Temporizador</span>
 			</div>
-			<div id="wrapperTimer"></div>
+			<button id="fetchProjectsAndCategories" data-tooltip="Este es el tooltip" >
+				<img src="images/reload.png" alt="timer" width="16px">
+			</button>
+			<div id="wrapperTimer" class="hidden"></div>
 		</div>
 		<div id="timer-wrapper" class="js-toggle-content" data-toggle="timer">
 			<div class="my-4">
 				<div class="relative mb-4">
 					<input type="text" id="projectSearch" placeholder="Selecciona un proyecto..."
-						   class="w-full p-2 border border-gray-300 rounded">
+						   class="w-full p-2 border border-gray-300 rounded outline-none hover:border-green-500 focus:border-green-500">
 					<div id="projectDropdown"
-						 class="absolute z-10 bg-white border border-gray-300 rounded w-full mt-1 max-h-60 overflow-y-auto hidden"></div>
+						 class="absolute z-20 bg-white border border-gray-300 rounded w-full mt-1 max-h-60 overflow-y-auto hidden"></div>
 				</div>
 				<div class="relative mb-4">
 					<input type="text" id="categorySearch" placeholder="Selecciona una categoría..."
-						   class="w-full p-2 border border-gray-300 rounded">
+						   class="w-full p-2 border border-gray-300 rounded outline-none hover:border-green-500 focus:border-green-500">
 					<div id="categoryDropdown"
-						 class="absolute z-10 bg-white border border-gray-300 rounded w-full mt-1 max-h-60 overflow-y-auto hidden"></div>
+						 class="absolute z-20 bg-white border border-gray-300 rounded w-full mt-1 max-h-60 overflow-y-auto hidden"></div>
 				</div>
 			</div>
 
@@ -52,7 +55,7 @@
 				</button>
 
 				<span id="timer" class="text-5xl text-neutral-700 font-light  z-10">00:00</span>
-				<span id="seconds" class="text-8xl text-gray-200 absolute -end-6 z-0">00</span>
+				<span id="seconds" class="text-8xl text-gray-200 absolute -end-5 z-0">00</span>
 			</div>
 
 			<div id="message" class="mt-4 text-center"></div>

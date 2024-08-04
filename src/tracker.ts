@@ -1,5 +1,3 @@
-import { API_URL, callHubPlannerProxy } from './utils';
-
 document.addEventListener('DOMContentLoaded', async () => {
 	const projectSearch = document.getElementById('projectSearch') as HTMLInputElement;
 	const projectDropdown = document.getElementById('projectDropdown') as HTMLDivElement;
@@ -16,20 +14,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const toggleButtons = document.querySelectorAll('.js-toggle') as NodeListOf<HTMLElement>;
 	const toggleContents = document.querySelectorAll('.js-toggle-content') as NodeListOf<HTMLElement>;
 
+	const fetchProjectsAndCategoriesButton = document.getElementById('fetchProjectsAndCategories') as HTMLButtonElement;
+
+
 	let projects: any[] = [];
+
 	let categories: any[] = [];
 	let selectedProject: string | null = null;
 	let selectedCategory: string | null = null;
 	let startTime: Date | null = null;
 	let timerInterval: number | null = null;
 
-	chrome.storage.sync.get(['apiToken', 'userEmail', 'startTime', 'selectedProject', 'selectedCategory'], async (data) => {
+	chrome.storage.sync.get(['apiToken', 'userEmail', 'startTime', 'selectedProject', 'selectedCategory', 'projects', 'categories'], async (data) => {
 		const {
 			apiToken,
 			userEmail,
 			startTime: storedStartTime,
 			selectedProject: storageProject,
-			selectedCategory: storageCategory
+			selectedCategory: storageCategory,
+			projects: storedProjects,
+			categories: storedCategories,
 		} = data;
 
 		selectedProject = storageProject;
@@ -50,29 +54,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 		}
 
 		try {
-			projects = await callHubPlannerProxy(
-				`${API_URL}/projects`,
-				apiToken,
-				'GET'
-			);
-
-			if (selectedProject) {
-				projectSearch.value = projects.find(project => project._id === selectedProject)?.name || '';
+			if (storedProjects && storedCategories) {
+				projects = storedProjects;
+				categories = storedCategories;
+				initializeDropdowns();
+			} else {
+				await fetchProjectsAndCategories(apiToken)
 			}
-
-			updateDropdown(projectDropdown, projects, projectSearch, selectedProject, setSelectedProject);
-
-			categories = await callHubPlannerProxy(
-				`${API_URL}/categories`,
-				apiToken,
-				'GET'
-			);
-
-			if (selectedCategory) {
-				categorySearch.value = categories.find(category => category._id === selectedCategory)?.name || '';
-			}
-
-			updateDropdown(categoryDropdown, categories, categorySearch, selectedCategory, setSelectedCategory);
 
 			startButton.addEventListener('click', async () => {
 				if (startTime) {
@@ -149,11 +137,30 @@ document.addEventListener('DOMContentLoaded', async () => {
 				});
 			});
 
+			fetchProjectsAndCategoriesButton.addEventListener('click', async (e) => {
+				e.stopPropagation()
+				await fetchProjectsAndCategories(apiToken);
+			});
+
 			startButtonEnable()
 		} catch (error) {
 			message.textContent = 'Error fetching user data: ' + (error as Error).message;
 		}
 	});
+
+	function initializeDropdowns() {
+		if (selectedProject) {
+			projectSearch.value = projects.find(project => project._id === selectedProject)?.name || '';
+		}
+
+		updateDropdown(projectDropdown, projects, projectSearch, selectedProject, setSelectedProject);
+
+		if (selectedCategory) {
+			categorySearch.value = categories.find(category => category._id === selectedCategory)?.name || '';
+		}
+
+		updateDropdown(categoryDropdown, categories, categorySearch, selectedCategory, setSelectedCategory);
+	}
 
 	function updateDropdown(
 		dropdown: HTMLDivElement,
@@ -262,5 +269,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 		startButton.disabled = true;
 		startButton.classList.replace('bg-green-500', 'bg-gray-300');
 		startButton.classList.replace('bg-red-500', 'bg-gray-300');
+	}
+
+	async function fetchProjectsAndCategories(apiToken: string) {
+		try {
+			chrome.runtime.sendMessage(
+				{action: "fetchProjectsAndCategories", data: {apiToken}},
+				async (response) => {
+					if (response?.error) {
+						message.textContent = 'Error fetching data: ' + response.error;
+					} else {
+						initializeDropdowns();
+					}
+				}
+			);
+		} catch (error) {
+			message.textContent = 'Error fetching user data: ' + (error as Error).message;
+		}
 	}
 });
