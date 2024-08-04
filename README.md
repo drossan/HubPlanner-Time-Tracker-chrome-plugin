@@ -8,14 +8,17 @@ específicos y categorías.
 
 ## TODO
 
-- [ ] Botón para hacer reset una vez iniciado el temporizador.
-- [ ] Script para autogenerar la variable API_URL.
-- [ ] Mejorar el manejo de errores.
-- [ ] Añadir soporte para login Google Auth.
-- [ ] Optimizar el rendimiento de la extensión.
-- [ ] Agregar pruebas unitarias.
-- [ ] Documentar mejor el código.
-- [ ] Action para autopublicar futuras releases.
+- [ ] Botón para hacer reset una vez iniciado el temporizador
+- [ ] Tooltip para botón reload
+- [ ] Tareas recientes
+- [ ] Icono para logout
+- [ ] Script para autogenerar la variable API_URL
+- [ ] Mejorar el manejo de errores
+- [ ] Añadir soporte para login Google Auth
+- [ ] Optimizar el rendimiento de la extensión
+- [ ] Agregar pruebas unitarias
+- [ ] Documentar mejor el código
+- [ ] Action para autopublicar futuras releases
 
 ## Características
 
