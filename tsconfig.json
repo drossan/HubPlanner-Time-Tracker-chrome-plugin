@@ -10,7 +10,10 @@
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["chrome"]
+    "types": ["chrome"],
+    "paths": {
+      "@projectTypes": ["types.d.ts"],
+    }
   },
   "include": [
     "src/**/*"

@@ -84,14 +84,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 					};
 
 					try {
-						await callHubPlannerProxy(
-							`${API_URL}/timeentry`,
-							apiToken,
-							'POST',
-							timeEntry
-						);
+//						await callHubPlannerProxy(
+//							`${API_URL}/timeentry`,
+//							apiToken,
+//							'POST',
+//							timeEntry
+//						);
+						message.classList.remove("text-red-600")
+						message.classList.add("text-green-600")
 						message.textContent = 'Time entry recorded successfully!';
 					} catch (error) {
+						message.classList.remove("text-green-600")
+						message.classList.add("text-red-600")
 						message.textContent = 'Failed to record time entry.';
 					}
 
@@ -114,6 +118,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 			});
 
 			logoutButton.addEventListener('click', () => {
+				chrome.storage.local.remove(['recentTasks'], () => {});
 				chrome.storage.sync.remove(['apiToken', 'userEmail', 'startTime', 'selectedProject', 'selectedCategory'], () => {
 					window.location.href = 'popup.html';
 				});

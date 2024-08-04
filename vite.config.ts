@@ -36,6 +36,7 @@ export default defineConfig({
 				content: resolve(__dirname, 'src/content.ts'),
 				popup: resolve(__dirname, 'src/popup.ts'),
 				tracker: resolve(__dirname, 'src/tracker.ts'),
+				recentTasks: resolve(__dirname, 'src/recentTasks.ts'),
 				css: resolve(__dirname, 'src/index.css'),
 			},
 			output: {

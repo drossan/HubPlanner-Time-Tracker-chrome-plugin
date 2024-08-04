@@ -16,7 +16,7 @@
 
 			<div class="flex justify-end text-right">
 				<a href="#" id="resetButton" class="hidden p-2 text-blue-500">Reset</a>
-				<a href="#" id="logoutButton" class="p-2 text-red-500 text-right">Logout</a>
+				<a href="#" id="logoutButton" class="p-2 text-red-500 text-right"><img src="images/logout.png" alt="logout" width="16px" /> </a>
 			</div>
 		</div>
 	</section>
@@ -54,23 +54,23 @@
 					<span id="startText" class="text-lg">Iniciar</span>
 				</button>
 
-				<span id="timer" class="text-5xl text-neutral-700 font-light  z-10">00:00</span>
-				<span id="seconds" class="text-8xl text-gray-200 absolute -end-5 z-0">00</span>
+				<span id="timer" class="text-5xl text-neutral-700 font-extralight z-10">00:00</span>
+				<span id="seconds" class="text-8xl text-gray-100 font-light absolute -end-5 z-0">00</span>
 			</div>
 
-			<div id="message" class="mt-4 text-center"></div>
+			<div id="message" class="my-2 text-center"></div>
 		</div>
 	</section>
-	<section class="px-4 my-2 mx-4 bg-white border rounded ">
-		<div class="my-4 flex items-center gap-x-2 js-toggle cursor-pointer" data-toggle="recent-task">
+	<section class="my-2 mx-4 bg-white border rounded ">
+		<div class="px-4 my-4 flex items-center gap-x-2 js-toggle cursor-pointer" data-toggle="recent-task">
 			<img src="images/recent-tasks.png" alt="recent-tasks" width="16px">
 			<span class="text-sm font-medium">Tareas recientes</span>
 		</div>
 		<div id="timerRecentTasksWrapper" class="hidden js-toggle-content" data-toggle="recent-task">
-			<p>WIP</p>
 		</div>
 	</section>
 </main>
 <script type="module" src="./src/tracker.js"></script>
+<script type="module" src="./src/recentTasks.js"></script>
 </body>
 </html>
