@@ -6,6 +6,11 @@ Esta es una extensión de Chrome para realizar un seguimiento del tiempo en proy
 extensión permite a los usuarios iniciar y detener un temporizador para registrar el tiempo trabajado en proyectos
 específicos y categorías.
 
+
+![image description](images/login.png)
+![image description](images/tracking.png)
+
+
 ## TODO
 
 - [ ] Botón para hacer reset una vez iniciado el temporizador
