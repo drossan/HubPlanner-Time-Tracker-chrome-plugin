@@ -1,6 +1,6 @@
 {
   "name": "hubplanner-chrome",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "dependencies": {
@@ -113,7 +113,7 @@
   "scripts": {
     "start": "npx vite build --watch",
     "build": "npx vite build",
-    "publish": "npm i && npm run build && zip -q -r dist.zip . "
+    "publish": "npm i && npm run build && cd dist && zip -q -r ../publish.zip ."
   },
   "keywords": [],
   "author": "daniel.rossello@secuoyas.com",

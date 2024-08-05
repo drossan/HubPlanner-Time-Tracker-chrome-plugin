@@ -1,11 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "HubPlanner Time Tracker",
-  "version": "1.0.0",
+  "name": "Demo: HubPlanner Time Tracker - Secuoyas Experiences",
+  "version": "0.0.1",
   "description": "Track your time directly from Chrome.",
   "permissions": [
     "storage",
-    "activeTab",
     "scripting"
   ],
   "action": {

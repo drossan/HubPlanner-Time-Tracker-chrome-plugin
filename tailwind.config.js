@@ -10,7 +10,7 @@ export default {
         '400px': '400px',
       },
       height: {
-        '450px': '450px',
+        '470px': '470px',
       }
     }
   },

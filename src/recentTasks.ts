@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 		if (recentTask?.items?.length) {
 			recentTask.items.forEach((timeEntriesWeek: TimeEntriesWeek) => {
 				const weekDiv = document.createElement('div');
-				weekDiv.classList.add('my-2', 'border', 'border-gray-200');
+				weekDiv.classList.add('mb-4', 'border', 'border-gray-200');
 				weekDiv.innerHTML = `<h2 class="bg-gray-300 py-4 px-4 flex items-center justify-between">${timeEntriesWeek.week} <span>Total: (${timeEntriesWeek.total_time})</span></h2>`;
 
 				const daysList = document.createElement('ul');

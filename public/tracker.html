@@ -5,30 +5,33 @@
 	<title>Hubplanner Time Tracker</title>
 	<link rel="stylesheet" href="./assets/css.css">
 </head>
-<body class="font-sans">
-<main class="container mx-auto max-w-sm w-400px h-450px flex flex-col">
-	<section class="px-4 pt-4 mb-2 bg-white">
-		<div class="flex items-center justify-between gap-x-1 w-full pb-2 border-b border-gray-200">
+<body class="font-sans ">
+<main class="container mx-auto max-w-sm w-400px h-470px flex flex-col ">
+	<section class="p-4 bg-white fixed top-0 end-0 start-0 bg-white border-b border-color-gray-100">
+		<div class="flex items-center justify-between gap-x-1 w-full">
 			<div class="flex items-center justify-center">
 				<img src="images/logo.png" width="30px" height="30px"/>
 				<h2 class="text-base font-bold"> Secuoyas Experience</h2>
 			</div>
-
 			<div class="flex justify-end text-right">
-				<button id="fetchProjectsAndCategories" data-tooltip="Este es el tooltip" >
-					<img src="images/reload.png" alt="timer" width="16px">
+				<button id="fetchProjectsAndCategories" data-tooltip="Este es el tooltip">
+					<img src="images/reload_database.png" alt="timer" width="20px">
 				</button>
-				<a href="#" id="logoutButton" class="p-2 text-red-500 text-right"><img src="images/logout.png" alt="logout" width="16px" /> </a>
+				<a href="#" id="logoutButton" class="p-2 text-red-500 text-right">
+					<img src="images/logout.png"
+						 alt="logout" width="16px"
+					/>
+				</a>
 			</div>
 		</div>
 	</section>
-	<section class="px-4 my-2 mx-4 bg-white border rounded">
+	<section class="mt-20 px-4 my-2 mx-4 bg-white border rounded">
 		<div class="my-4 flex justify-between items-center js-toggle cursor-pointer" data-toggle="timer">
 			<div class="flex items-center gap-x-2">
 				<img src="images/timer.png" alt="timer" width="16px">
 				<span class="text-sm font-medium">Temporizador</span>
 			</div>
-			<button id="clearForm" data-tooltip="Este es el tooltip" >
+			<button id="clearForm" data-tooltip="Este es el tooltip">
 				<img src="images/reload.png" alt="timer" width="16px">
 			</button>
 			<div id="wrapperTimer" class="hidden"></div>
@@ -63,13 +66,14 @@
 			<div id="message" class="my-2 text-center"></div>
 		</div>
 	</section>
-	<section class="my-2 mx-4 bg-white border rounded ">
-		<div class="px-4 my-4 flex justify-between items-center gap-x-2 js-toggle cursor-pointer" data-toggle="recent-task">
+	<section class="my-2 mx-4 bg-white">
+		<div class="px-4 py-4 flex justify-between items-center gap-x-2 js-toggle cursor-pointer border rounded"
+			 data-toggle="recent-task">
 			<div class="flex items-center gap-x-2">
 				<img src="images/recent-tasks.png" alt="recent-tasks" width="16px">
 				<span class="text-sm font-medium">Tareas recientes</span>
 			</div>
-			<button id="fetchRecentTasks" data-tooltip="Este es el tooltip" >
+			<button id="fetchRecentTasks" data-tooltip="Este es el tooltip">
 				<img src="images/reload.png" alt="timer" width="16px">
 			</button>
 		</div>
@@ -77,8 +81,9 @@
 		</div>
 	</section>
 
-	<section class="my-2 mx-4 bg-white flex items-center justify-between">
-		<a href="https://secuoyas.hubplanner.com/time_sheets" class="hover:text-green-500" target="_blank">HubPlanner</a>
+	<section class="p-4 bg-white flex items-center justify-between fixed bottom-0 end-0 start-0 bg-white border-t border-color-gray-100">
+		<a href="https://secuoyas.hubplanner.com/time_sheets" class="hover:text-green-500"
+		   target="_blank">HubPlanner</a>
 		<p>v0.0.1</p>
 	</section>
 </main>
