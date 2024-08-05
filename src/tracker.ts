@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const toggleButtons = document.querySelectorAll('.js-toggle') as NodeListOf<HTMLElement>;
 	const toggleContents = document.querySelectorAll('.js-toggle-content') as NodeListOf<HTMLElement>;
 
+	const clearForm = document.getElementById('clearForm') as HTMLButtonElement;
 	const fetchProjectsAndCategoriesButton = document.getElementById('fetchProjectsAndCategories') as HTMLButtonElement;
-
 
 	let projects: any[] = [];
 
@@ -84,12 +84,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 					};
 
 					try {
-//						await callHubPlannerProxy(
-//							`${API_URL}/timeentry`,
-//							apiToken,
-//							'POST',
-//							timeEntry
-//						);
+						await callHubPlannerProxy(
+							`${API_URL}/timeentry`,
+							apiToken,
+							'POST',
+							timeEntry
+						);
 						message.classList.remove("text-red-600")
 						message.classList.add("text-green-600")
 						message.textContent = 'Time entry recorded successfully!';
@@ -147,6 +147,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 						}
 					});
 				});
+			});
+
+			clearForm.addEventListener('click', async (e) => {
+				e.stopPropagation()
+				// TODO: Añadir aviso!
+				resetForm()
 			});
 
 			fetchProjectsAndCategoriesButton.addEventListener('click', async (e) => {
@@ -272,6 +278,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 		chrome.storage.sync.remove(['startTime', 'selectedProject', 'selectedCategory']);
 
 		startTime = null;
+		timer.textContent = '00:00';
+		timerSeconds.textContent = '00';
+
 		selectedProject = null;
 		selectedCategory = null;
 

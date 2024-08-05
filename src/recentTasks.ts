@@ -2,6 +2,7 @@
 import { TimeEntry, TimeEntries, RecentTask, TimeEntriesWeek, TimeEntriesDayOfWeek } from '@projectTypes';
 
 document.addEventListener('DOMContentLoaded', async () => {
+	const buttonFetchRecentTasks = document.getElementById('fetchRecentTasks') as HTMLButtonElement;
 
 	let recentTask: RecentTask;
 
@@ -13,6 +14,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 		} else {
 			await fetchRecentTasks();
 		}
+
+		buttonFetchRecentTasks.addEventListener('click', async (e) => {
+			e.stopPropagation()
+			await fetchRecentTasks();
+		});
 	});
 
 	// Definir la función para agrupar los proyectos por project y categoryTemplateId

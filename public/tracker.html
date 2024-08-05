@@ -15,18 +15,20 @@
 			</div>
 
 			<div class="flex justify-end text-right">
-				<a href="#" id="resetButton" class="hidden p-2 text-blue-500">Reset</a>
+				<button id="fetchProjectsAndCategories" data-tooltip="Este es el tooltip" >
+					<img src="images/reload.png" alt="timer" width="16px">
+				</button>
 				<a href="#" id="logoutButton" class="p-2 text-red-500 text-right"><img src="images/logout.png" alt="logout" width="16px" /> </a>
 			</div>
 		</div>
 	</section>
 	<section class="px-4 my-2 mx-4 bg-white border rounded">
-		<div class="my-4 flex justify-between items-center  js-toggle cursor-pointer" data-toggle="timer">
+		<div class="my-4 flex justify-between items-center js-toggle cursor-pointer" data-toggle="timer">
 			<div class="flex items-center gap-x-2">
 				<img src="images/timer.png" alt="timer" width="16px">
 				<span class="text-sm font-medium">Temporizador</span>
 			</div>
-			<button id="fetchProjectsAndCategories" data-tooltip="Este es el tooltip" >
+			<button id="clearForm" data-tooltip="Este es el tooltip" >
 				<img src="images/reload.png" alt="timer" width="16px">
 			</button>
 			<div id="wrapperTimer" class="hidden"></div>
@@ -62,12 +64,22 @@
 		</div>
 	</section>
 	<section class="my-2 mx-4 bg-white border rounded ">
-		<div class="px-4 my-4 flex items-center gap-x-2 js-toggle cursor-pointer" data-toggle="recent-task">
-			<img src="images/recent-tasks.png" alt="recent-tasks" width="16px">
-			<span class="text-sm font-medium">Tareas recientes</span>
+		<div class="px-4 my-4 flex justify-between items-center gap-x-2 js-toggle cursor-pointer" data-toggle="recent-task">
+			<div class="flex items-center gap-x-2">
+				<img src="images/recent-tasks.png" alt="recent-tasks" width="16px">
+				<span class="text-sm font-medium">Tareas recientes</span>
+			</div>
+			<button id="fetchRecentTasks" data-tooltip="Este es el tooltip" >
+				<img src="images/reload.png" alt="timer" width="16px">
+			</button>
 		</div>
 		<div id="timerRecentTasksWrapper" class="hidden js-toggle-content" data-toggle="recent-task">
 		</div>
+	</section>
+
+	<section class="my-2 mx-4 bg-white flex items-center justify-between">
+		<a href="https://secuoyas.hubplanner.com/time_sheets" class="hover:text-green-500" target="_blank">HubPlanner</a>
+		<p>v0.0.1</p>
 	</section>
 </main>
 <script type="module" src="./src/tracker.js"></script>

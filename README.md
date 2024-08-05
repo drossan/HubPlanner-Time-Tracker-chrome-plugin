@@ -17,8 +17,9 @@ específicos y categorías.
 
 ## TODO
 
-- [ ] Botón para hacer reset una vez iniciado el temporizador
-- [ ] Tooltip para botón reload
+- [x] Botón para hacer reset una vez iniciado el temporizador
+- [ ] Añadir loader en los botones de reset
+- [ ] Tooltip para botones
 - [ ] Tareas recientes
 - [ ] Icono para logout
 - [ ] Script para autogenerar la variable API_URL
