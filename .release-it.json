@@ -8,6 +8,6 @@
     "after:bump": "node update-files.js ${version}"
   },
   "npm": {
-    "publish": false
+    "publish": true
   }
 }
