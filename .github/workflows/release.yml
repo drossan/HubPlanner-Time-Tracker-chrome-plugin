@@ -29,7 +29,28 @@ jobs:
         with:
           node-version: 18.x
 
+      - name: Install dependencies
+        run: npm install
+
+      - name: Set API URL
+        run: npm run set-api-url
+        env:
+          API_URL: ${{ secrets.API_URL }}
+
+      - name: Build project
+        run: npm run build
+
+      - name: Create zip
+        run: npm run build-zip
+
       - name: Create Change Log
         run: npx changelogithub
         env:
-          GITHUB_TOKEN: ${{secrets.GRIDDO_RELEASE_ACCESS_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GRIDDO_RELEASE_ACCESS_TOKEN }}
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build-output.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

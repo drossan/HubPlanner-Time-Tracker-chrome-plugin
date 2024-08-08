@@ -1,1 +1,1 @@
-export const API_URL = "http://localhost:1331/api/v1";
+export const API_URL = "https://gpjw64fugg.execute-api.eu-west-3.amazonaws.com/dev/api/v1";

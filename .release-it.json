@@ -5,7 +5,7 @@
     "push": true
   },
   "hooks": {
-    "after:bump": "node update-files.js ${version}"
+    "after:bump": "node scripts/update-files.js ${version}"
   },
   "npm": {
     "publish": true

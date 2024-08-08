@@ -18,7 +18,7 @@ if (!API_URL) {
 }
 
 
-const updateFile = (filePath, regex, replacement) => {
+export const updateFile = (filePath, regex, replacement) => {
   const fullPath = path.join(process.cwd(), filePath);
   const contents = fs.readFileSync(fullPath, 'utf8');
   const newContents = contents.replace(regex, replacement);
@@ -33,6 +33,6 @@ updateFile('src/ui/components/Footer/index.tsx', /v\d+\.\d+\.\d+/, `v${newVersio
 
 console.log(`Actualizados los archivos a la versión ${newVersion}`);
 
-updateFile('share/api.ts', /v\d+\.\d+\.\d+/, `v${newVersion}`);
 // Actualizar API_URL en el archivo correspondiente
 updateFile('share/api.ts', /export const API_URL = ".*";/, `export const API_URL = "${API_URL}";`);
+console.log(`Actualiza la URL del API ${API_URL}`);
