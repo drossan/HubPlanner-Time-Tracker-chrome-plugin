@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 const newVersion = process.argv[2];
 if (!newVersion) {
@@ -8,7 +8,7 @@ if (!newVersion) {
 }
 
 const updateFile = (filePath, regex, replacement) => {
-  const fullPath = path.join(__dirname, filePath);
+  const fullPath = path.join(process.cwd(), filePath);
   const contents = fs.readFileSync(fullPath, 'utf8');
   const newContents = contents.replace(regex, replacement);
   fs.writeFileSync(fullPath, newContents);
@@ -18,6 +18,6 @@ const updateFile = (filePath, regex, replacement) => {
 updateFile('public/manifest.json', /"version":\s*"\d+\.\d+\.\d+"/, `"version": "${newVersion}"`);
 
 // Actualizar Footer/index.ts
-updateFile('src/ui/components/Footer/index.tsx', /v\d+\.\d+\.\d+/, `v${newVersion}`);
+updateFile('src/ui/components/Footer/index.ts', /v\d+\.\d+\.\d+/, `v${newVersion}`);
 
 console.log(`Actualizados los archivos a la versión ${newVersion}`);
