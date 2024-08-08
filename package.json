@@ -10,6 +10,7 @@
     "lint:fix": "eslint --fix 'src/**/*.{js,ts,tsx}'",
     "preview": "vite preview",
     "prettier": "prettier --write 'src/**/*.{js,ts,tsx,html,css}'",
+    "release": "bumpp --commit --push --tag",
     "build-zip": "npm run build && cd dist && zip -r ../publish.zip * && cd .."
   },
   "dependencies": {
