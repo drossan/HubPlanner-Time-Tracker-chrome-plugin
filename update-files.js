@@ -18,6 +18,6 @@ const updateFile = (filePath, regex, replacement) => {
 updateFile('public/manifest.json', /"version":\s*"\d+\.\d+\.\d+"/, `"version": "${newVersion}"`);
 
 // Actualizar Footer/index.ts
-updateFile('src/ui/components/Footer/index.ts', /v\d+\.\d+\.\d+/, `v${newVersion}`);
+updateFile('src/ui/components/Footer/index.tsx', /v\d+\.\d+\.\d+/, `v${newVersion}`);
 
 console.log(`Actualizados los archivos a la versión ${newVersion}`);
