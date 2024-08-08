@@ -1,0 +1,20 @@
+{
+  "files": ["package.json", "public/manifest.json", "src/ui/components/Footer/index.ts"],
+ "updateConfigs": [
+  {
+	"filename": "public/manifest.json",
+	"updater": "standard-version-updater-manifest"
+  },
+  {
+	"filename": "src/ui/components/Footer/index.tsx",
+	"updater": {
+	  "readVersion": "v(\\d+\\.\\d+\\.\\d+)",
+	  "writeVersion": "v${version}"
+	}
+  }
+],
+ "commitMessage": "chore: release v${version}",
+ "tagName": "v${version}",
+ "push": true,
+ "tag": true
+}

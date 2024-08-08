@@ -1,7 +1,7 @@
 {
   "name": "hubplanner-chrome-extension",
   "private": true,
-  "version": "1.0.2",
+  "version": "0.0.8",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix 'src/**/*.{js,ts,tsx}'",
     "preview": "vite preview",
     "prettier": "prettier --write 'src/**/*.{js,ts,tsx,html,css}'",
-    "release": "bumpp --commit --push --tag",
+    "release": "bumpp",
     "build-zip": "npm run build && cd dist && zip -r ../publish.zip * && cd .."
   },
   "dependencies": {
