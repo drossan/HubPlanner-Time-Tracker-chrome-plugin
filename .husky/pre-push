@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run --silent prepare
+
+# Check stage
+if [[ $(git diff --stat) != '' ]]; then
+ 	echo '\033[0;31m-----------------------------------------------'
+ 	echo '🚫 pre-push hook error ~ The stage is not clean'
+ 	echo '-----------------------------------------------'
+	echo '\033[0m'
+	exit 1
+fi
