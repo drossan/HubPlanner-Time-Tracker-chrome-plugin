@@ -27,3 +27,4 @@ publish.zip
 publish/
 package-lock.json
 
+.env
