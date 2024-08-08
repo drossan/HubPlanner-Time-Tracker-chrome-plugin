@@ -24,5 +24,6 @@ dist-ssr
 *.sw?
 
 publish.zip
-package-lock.json
+publish/
+#package-lock.json
 

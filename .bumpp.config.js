@@ -28,6 +28,6 @@ module.exports = {
   ],
   commitMessage: 'chore: release v${version}',
   tagName: 'v${version}',
-  push: true,
+  push: false,
   tag: true
 };
