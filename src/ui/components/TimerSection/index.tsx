@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { useState, useEffect, Dispatch, SetStateAction, useCallback } from "react";
 
 import { Categories, DataTypesReloadData, Projects, TimeEntryAdd } from "@projectTypes";
 import AutocompleteInput from "@ui/components/AutocompleteInput";
@@ -56,7 +56,7 @@ const TimerSection = ({
 		};
 	}, [startTime]);
 
-	const updateTimer = () => {
+	const updateTimer = useCallback( () => {
 		if (startTime) {
 			const now = new Date();
 			const elapsed = Math.floor((now.getTime() - startTime.getTime()) / 1000);
@@ -68,7 +68,7 @@ const TimerSection = ({
 			);
 			setTimerSeconds(`${String(seconds).padStart(2, "0")}`);
 		}
-	};
+	}, [startTime])
 
 	const handleStartStop = async () => {
 		if (startTime) {
@@ -109,8 +109,10 @@ const TimerSection = ({
 				setLoading(false);
 				setMessage("Fallo al registrar la entrada de tiempo");
 			}
+
+			handleClearForm()
 		} else {
-			setStartTime(new Date());
+			setStartTime( new Date());
 			const interval = setInterval(updateTimer, 1000);
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			//@ts-expect-error

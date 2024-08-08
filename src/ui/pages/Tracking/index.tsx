@@ -110,8 +110,13 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 					});
 			}
 		})
-
 	}, [hasDataLocal]);
+
+	useEffect(() => {
+		chrome.storage.sync.set({
+			startTime: startTime?.toISOString() || null
+		});
+	}, [startTime]);
 
 	return (
 		<LayoutApp
