@@ -36,6 +36,7 @@ específicos y categorías.
 - [ ] Action para autopublicar futuras releases
 - [ ] Hay imágenes que son más pequeñas de lo que necesitamos. Ejemplo la imagen de login, la renderizamos a16px y la
   imagen es de 14px
+- [] Actualizar punto Archivos Clave del README.md
 
 ## Características
 
@@ -99,39 +100,65 @@ API_URL=http://localhost:1331/api/v1
 ## Estructura del Proyecto
 
 ```
-/hubplanner-time-tracker-chrome/
-|-- public/
-|   |-- images/
-|       |-- icon-16.png
-|       |-- icon-48.png
-|       |-- icon-128.png
-|       |-- icon_play.png
-|       |-- icon_stop.png
-|   |-- manifest.json
-|   |-- popup.html
-|   |-- tracker.html
-|-- src/
+/hubplanner-chrome/
+|-- background
 |   |-- background.ts
-|   |-- content.ts
-|   |-- popup.ts
-|   |-- tracker.ts
-|   |-- utils.ts
-|-- dist/
+|-- .husky
+|   |-- _
+|   |   |-- husky.sh
+|   |   |-- .gitignore
+|   |-- pre-push
+|   |-- pre-commit
+|-- tsconfig.node.json
+|-- index.html
+|-- tailwind.config.js
+|-- images
+|   |-- tracking01.png
+|   |-- tracking02.png
+|   |-- login.png
+|   |-- recentTask.png
+|-- types.d.ts
+|-- vite-background.config.ts
+|-- README.md
+|-- content_script
+|   |-- content-script.ts
+|   |-- main.ts
+|-- public
+|   |-- images
+|   |-- icons
+|   |-- manifest.json
+|-- .prettierrc.json
+|-- .gitignore
+|-- package-lock.json
 |-- package.json
+|-- hubplanner.iml
+|-- tslint.json
+|-- .github
+|-- vite-content.config.ts
 |-- tsconfig.json
+|-- .eslintignore
 |-- vite.config.ts
+|-- postcss.config.js
+|-- .eslintrc.json
+|-- share
+|   |-- callHubPlannerProxy.ts
+|   |-- api.ts
+|-- src
+|   |-- ui
+|   |   |-- layout
+|   |   |-- components
+|   |   |-- pages
+|   |-- App.tsx
+|   |-- main.tsx
+|   |-- content
+|   |-- styles
+|   |-- vite-env.d.ts
+|   |-- hooks
 ```
 
 ## Archivos Clave
 
-- **manifest.json**: Archivo de manifiesto de la extensión de Chrome.
-- **popup.html**: HTML para la ventana emergente de la extensión.
-- **tracker.html**: HTML para la página de seguimiento del tiempo.
-- **background.ts**: Script de fondo de la extensión.
-- **content.ts**: Script de contenido de la extensión.
-- **popup.ts**: Script para la funcionalidad de la ventana emergente.
-- **tracker.ts**: Script para la funcionalidad de la página de seguimiento del tiempo.
-- **utils.ts**: Utilidades y funciones auxiliares.
+> WIP
 
 ## Desarrollo
 
