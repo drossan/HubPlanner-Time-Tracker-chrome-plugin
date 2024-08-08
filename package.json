@@ -12,7 +12,7 @@
     "prettier": "prettier --write 'src/**/*.{js,ts,tsx,html,css}'",
     "release": "release-it",
     "set-api-url": "node scripts/update-api-url.js",
-    "build-zip": "npm run build && cd dist && zip -r ../publish.zip * && cd .."
+    "build-zip": "npm run build && cd dist && zip -r ../build-output.zip * && cd .."
   },
   "dependencies": {
     "react": "^18.3.1",
