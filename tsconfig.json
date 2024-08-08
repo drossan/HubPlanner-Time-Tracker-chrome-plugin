@@ -31,14 +31,15 @@
       "@ui/*": ["src/ui/*"],
       "@hooks/*": ["src/hooks/*"],
       "@projectTypes": ["types.d.ts"]
-    }
+    },
+    "types": ["node", "chrome"]
   },
   "include": [
     "src",
     "content_script",
     "background",
     "shared",
-    "types.d.ts"
+    "types.d.ts",
   ],
   "references": [
     {

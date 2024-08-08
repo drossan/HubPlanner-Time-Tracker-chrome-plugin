@@ -1,10 +1,20 @@
-import { useState, useEffect, Dispatch, SetStateAction, useCallback } from "react";
-
-import { Categories, DataTypesReloadData, Projects, TimeEntryAdd } from "@projectTypes";
-import AutocompleteInput from "@ui/components/AutocompleteInput";
-import IconButtonWithTooltip from "@ui/components/IconButtonWithTooltip";
+import {
+	useState,
+	useEffect,
+	Dispatch,
+	SetStateAction,
+	useCallback,
+} from "react";
 
 import useReloadData from "@hooks/useReloadDatabase.ts";
+import {
+	Categories,
+	DataTypesReloadData,
+	Projects,
+	TimeEntryAdd,
+} from "@projectTypes";
+import AutocompleteInput from "@ui/components/AutocompleteInput";
+import IconButtonWithTooltip from "@ui/components/IconButtonWithTooltip";
 
 interface TimerSectionProps {
 	apiToken: string;
@@ -16,8 +26,10 @@ interface TimerSectionProps {
 	setSelectedCategory: (category: string | null) => void;
 	startTime: Date | null;
 	setStartTime: (startTime: Date | null) => void;
-	timerInterval: number | null;
-	setTimerInterval: (timerInterval: number | null) => void;
+	timerInterval: NodeJS.Timeout | null;
+	setTimerInterval: (
+		timerInterval: ReturnType<typeof setInterval> | null,
+	) => void;
 	tab: number;
 	setTab: (number: number) => void;
 	setLoading: Dispatch<SetStateAction<boolean>>;
@@ -47,8 +59,6 @@ const TimerSection = ({
 	useEffect(() => {
 		if (startTime) {
 			const interval = setInterval(updateTimer, 1000);
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			//@ts-expect-error
 			setTimerInterval(interval);
 		}
 		return () => {
@@ -56,7 +66,7 @@ const TimerSection = ({
 		};
 	}, [startTime]);
 
-	const updateTimer = useCallback( () => {
+	const updateTimer = useCallback(() => {
 		if (startTime) {
 			const now = new Date();
 			const elapsed = Math.floor((now.getTime() - startTime.getTime()) / 1000);
@@ -68,7 +78,7 @@ const TimerSection = ({
 			);
 			setTimerSeconds(`${String(seconds).padStart(2, "0")}`);
 		}
-	}, [startTime])
+	}, [startTime]);
 
 	const handleStartStop = async () => {
 		if (startTime) {
@@ -96,7 +106,7 @@ const TimerSection = ({
 					body: timeEntry,
 				}).then(() => {
 					setMessage("Entrada de tiempo registrada con éxito");
-				})
+				});
 
 				reloadData({
 					apiToken: apiToken,
@@ -110,12 +120,10 @@ const TimerSection = ({
 				setMessage("Fallo al registrar la entrada de tiempo");
 			}
 
-			handleClearForm()
+			handleClearForm();
 		} else {
-			setStartTime( new Date());
+			setStartTime(new Date());
 			const interval = setInterval(updateTimer, 1000);
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			//@ts-expect-error
 			setTimerInterval(interval);
 		}
 	};
@@ -141,7 +149,7 @@ const TimerSection = ({
 				onClick={() => setTab(1)}
 			>
 				<div className="flex items-center gap-x-2">
-					<img src="/images/timer.png" alt="timer" width="16px"/>
+					<img src="/images/timer.png" alt="timer" width="16px" />
 					<span className="text-sm font-medium">Temporizador</span>
 				</div>
 				<IconButtonWithTooltip
@@ -159,7 +167,7 @@ const TimerSection = ({
 						selectedItem={selectedProject}
 						onSelectItem={(value) => {
 							setSelectedProject(value);
-							chrome.storage.sync.set({selectedProject: value});
+							chrome.storage.sync.set({ selectedProject: value });
 						}}
 						placeholder="Selecciona un proyecto..."
 					/>
@@ -170,7 +178,7 @@ const TimerSection = ({
 						selectedItem={selectedCategory}
 						onSelectItem={(value) => {
 							setSelectedCategory(value);
-							chrome.storage.sync.set({selectedCategory: value});
+							chrome.storage.sync.set({ selectedCategory: value });
 						}}
 						placeholder="Selecciona una categoría..."
 					/>

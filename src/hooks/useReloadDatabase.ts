@@ -5,7 +5,7 @@ import { DataTypesReloadData, TimeEntryAdd } from "@projectTypes";
 type ReloadDataProps = {
 	apiToken: string;
 	action: DataTypesReloadData;
-	body?: TimeEntryAdd
+	body?: TimeEntryAdd;
 };
 
 /**
@@ -19,7 +19,7 @@ const useReloadData = () => {
 		async ({
 			apiToken,
 			action = DataTypesReloadData.PROJECTS_AND_CATEGORIES,
-			body
+			body,
 		}: ReloadDataProps) => {
 			try {
 				chrome.runtime.sendMessage(

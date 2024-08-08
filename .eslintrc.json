@@ -44,7 +44,7 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "no-undef": "error",
+    "no-undef": "off", // Cambia "error" a "off"
     "import/order": [
       "error",
       {

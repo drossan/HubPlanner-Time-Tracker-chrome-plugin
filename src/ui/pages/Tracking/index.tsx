@@ -16,7 +16,7 @@ type OptionsProps = {
 	setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 };
 
-const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
+const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
 	const [hasDataSync, setHasDataSync] = useState<boolean>(false);
@@ -30,7 +30,9 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 	const [selectedProject, setSelectedProject] = useState<string | null>(null);
 	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 	const [startTime, setStartTime] = useState<Date | null>(null);
-	const [timerInterval, setTimerInterval] = useState<number | null>(null);
+	const [timerInterval, setTimerInterval] = useState<NodeJS.Timeout | null>(
+		null,
+	);
 
 	const [tab, setTab] = useState(1);
 
@@ -78,7 +80,7 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 						action: DataTypesReloadData.PROJECTS_AND_CATEGORIES,
 					})
 						.then(() => {
-							setHasDataSync(true)
+							setHasDataSync(true);
 						})
 						.finally(() => {
 							setLoading(false);
@@ -89,8 +91,8 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 	}, [hasDataSync]);
 
 	useEffect(() => {
-		chrome.storage.local.get(['recentTasks'], async (data) => {
-			const {recentTasks: storedRecentTasks} = data;
+		chrome.storage.local.get(["recentTasks"], async (data) => {
+			const { recentTasks: storedRecentTasks } = data;
 
 			if (!apiToken) {
 				return;
@@ -99,7 +101,6 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 			if (storedRecentTasks) {
 				setRecentTask(storedRecentTasks);
 			} else {
-
 				reloadData({
 					apiToken,
 					action: DataTypesReloadData.RECENT_TASK,
@@ -109,12 +110,12 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 						setLoading(false);
 					});
 			}
-		})
+		});
 	}, [hasDataLocal]);
 
 	useEffect(() => {
 		chrome.storage.sync.set({
-			startTime: startTime?.toISOString() || null
+			startTime: startTime?.toISOString() || null,
 		});
 	}, [startTime]);
 
