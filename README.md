@@ -27,7 +27,7 @@ específicos y categorías.
 - [] Tareas recientes
     - [ ] Botón para iniciar tiempo desde una tarea reciente
 - [x] Icono para logout
-- [ ] Script para autogenerar la variable API_URL
+- [X] Script para autogenerar la variable API_URL
 - [ ] Mejorar el manejo de errores
 - [ ] Añadir soporte para login Google Auth
 - [ ] Optimizar el rendimiento de la extensión
@@ -37,6 +37,7 @@ específicos y categorías.
 - [ ] Hay imágenes que son más pequeñas de lo que necesitamos. Ejemplo la imagen de login, la renderizamos a16px y la
   imagen es de 14px
 - [] Actualizar punto Archivos Clave del README.md
+- [] Cuando tenemos una tarea activa y re-entramos al plugin, el tiempo tarda mucho en cargar/calcularse
 
 ## Características
 
