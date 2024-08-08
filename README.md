@@ -7,21 +7,26 @@ extensión permite a los usuarios iniciar y detener un temporizador para registr
 específicos y categorías.
 
 ### Pantalla login
+
 ![image description](images/login.png)
+
 ### Pantalla Tracking
+
 ![image description](images/tracking01.png)
 ![image description](images/tracking02.png)
 
 ### Tareas recientes
+
 ![image description](images/recentTask.png)
 
 ## TODO
 
 - [x] Botón para hacer reset una vez iniciado el temporizador
-- [ ] Añadir loader en los botones de reset
-- [ ] Tooltip para botones
-- [ ] Tareas recientes
-- [ ] Icono para logout
+- [x] Añadir loader en los botones de reset
+- [x] Tooltip para botones
+- [] Tareas recientes
+    - [ ] Botón para iniciar tiempo desde una tarea reciente
+- [x] Icono para logout
 - [ ] Script para autogenerar la variable API_URL
 - [ ] Mejorar el manejo de errores
 - [ ] Añadir soporte para login Google Auth
@@ -29,6 +34,8 @@ específicos y categorías.
 - [ ] Agregar pruebas unitarias
 - [ ] Documentar mejor el código
 - [ ] Action para autopublicar futuras releases
+- [ ] Hay imágenes que son más pequeñas de lo que necesitamos. Ejemplo la imagen de login, la renderizamos a16px y la
+  imagen es de 14px
 
 ## Características
 
