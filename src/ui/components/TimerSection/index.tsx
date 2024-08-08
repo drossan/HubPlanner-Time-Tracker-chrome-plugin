@@ -94,7 +94,7 @@ const TimerSection = ({
 					apiToken: apiToken,
 					action: DataTypesReloadData.ADD_TASK,
 					body: timeEntry,
-				}).then( () => {
+				}).then(() => {
 					setMessage("Entrada de tiempo registrada con éxito");
 				})
 

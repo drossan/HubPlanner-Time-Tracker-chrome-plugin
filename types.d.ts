@@ -58,3 +58,7 @@ export enum DataTypesReloadData {
 	'RECENT_TASK' = 'fetchRecentTasks',
 	'ADD_TASK' = 'addTask',
 }
+
+export interface ApiResponse {
+	message: string
+}

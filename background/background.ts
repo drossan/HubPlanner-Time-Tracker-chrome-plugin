@@ -7,8 +7,8 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener( (request, _, sendResponse) => {
-	const {action, data, body} = request;
-	const {apiToken} = data;
+	const {action, data} = request;
+	const {apiToken, body} = data;
 
 	const fetchProjectsAndCategories = async () => {
 		try {
@@ -40,8 +40,8 @@ chrome.runtime.onMessage.addListener( (request, _, sendResponse) => {
 
 	const addTask = async (timeEntry: TimeEntryAdd) => {
 		try {
-			// TODO: Implemnentar mensaje de respuesta API
 			await callHubPlannerProxy(`${API_URL}/timeentry`, apiToken, 'POST', timeEntry);
+			sendResponse({message: "Entrada de tiempo registrada con éxito"});
 		} catch (error) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			//@ts-expect-error

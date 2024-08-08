@@ -19,10 +19,11 @@ const useReloadData = () => {
 		async ({
 			apiToken,
 			action = DataTypesReloadData.PROJECTS_AND_CATEGORIES,
+			body
 		}: ReloadDataProps) => {
 			try {
 				chrome.runtime.sendMessage(
-					{ action, data: { apiToken } },
+					{ action, data: { apiToken, body } },
 					(response) => {
 						if (response?.error) {
 							console.log("Error fetching data: " + response.error || response);

@@ -16,10 +16,11 @@ type OptionsProps = {
 	setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 };
 
-const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
+const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const [hasData, setHasData] = useState<boolean>(false);
+	const [hasDataSync, setHasDataSync] = useState<boolean>(false);
+	const [hasDataLocal, setHasDataLocal] = useState<boolean>(false);
 	const [projects, setProjects] = useState<Projects>([]);
 	const [categories, setCategories] = useState<Categories>([]);
 	const [recentTask, setRecentTask] = useState<RecentTask>({
@@ -45,7 +46,6 @@ const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 				"selectedCategory",
 				"projects",
 				"categories",
-				"recentTasks",
 			],
 			async (data) => {
 				const {
@@ -56,7 +56,6 @@ const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 					selectedCategory: storageCategory,
 					projects: storedProjects,
 					categories: storedCategories,
-					recentTasks: storedRecentTasks,
 				} = data;
 
 				setSelectedProject(storageProject);
@@ -70,23 +69,49 @@ const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 					setStartTime(new Date(storedStartTime));
 				}
 
-				if (storedProjects && storedCategories & storedRecentTasks) {
+				if (storedProjects && storedCategories) {
 					setProjects(storedProjects);
 					setCategories(storedCategories);
-					setRecentTask(storedRecentTasks);
 				} else {
 					reloadData({
 						apiToken: apiToken,
-						action: DataTypesReloadData.ALL,
+						action: DataTypesReloadData.PROJECTS_AND_CATEGORIES,
 					})
-						.then(() => setHasData(true))
+						.then(() => {
+							setHasDataSync(true)
+						})
 						.finally(() => {
 							setLoading(false);
 						});
 				}
 			},
 		);
-	}, [hasData]);
+	}, [hasDataSync]);
+
+	useEffect(() => {
+		chrome.storage.local.get(['recentTasks'], async (data) => {
+			const {recentTasks: storedRecentTasks} = data;
+
+			if (!apiToken) {
+				return;
+			}
+
+			if (storedRecentTasks) {
+				setRecentTask(storedRecentTasks);
+			} else {
+
+				reloadData({
+					apiToken,
+					action: DataTypesReloadData.RECENT_TASK,
+				})
+					.then(() => setHasDataLocal(true))
+					.finally(() => {
+						setLoading(false);
+					});
+			}
+		})
+
+	}, [hasDataLocal]);
 
 	return (
 		<LayoutApp
