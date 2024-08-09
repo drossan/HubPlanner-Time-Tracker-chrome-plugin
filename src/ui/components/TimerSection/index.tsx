@@ -54,17 +54,9 @@ const TimerSection = ({
 	const [timer, setTimer] = useState<string>("00:00");
 	const [timerSeconds, setTimerSeconds] = useState<string>("00");
 	const [message, setMessage] = useState<string>("");
-	const reloadData = useReloadData();
+	const [startTimer, setStartTimer] = useState<boolean>(false);
 
-	useEffect(() => {
-		if (startTime) {
-			const interval = setInterval(updateTimer, 1000);
-			setTimerInterval(interval);
-		}
-		return () => {
-			if (timerInterval) clearInterval(timerInterval);
-		};
-	}, [startTime]);
+	const reloadData = useReloadData();
 
 	const updateTimer = useCallback(() => {
 		if (startTime) {
@@ -79,6 +71,23 @@ const TimerSection = ({
 			setTimerSeconds(`${String(seconds).padStart(2, "0")}`);
 		}
 	}, [startTime]);
+
+	useEffect(() => {
+		updateTimer()
+		if (startTime && !startTimer) {
+			setStartTimer(true)
+		}
+	}, [startTime]);
+
+	useEffect(() => {
+		if (startTime && !timerInterval) {
+			const interval = setInterval(updateTimer, 1000);
+			setTimerInterval(interval);
+		}
+		return () => {
+			if (timerInterval) clearInterval(timerInterval);
+		};
+	}, [startTimer]);
 
 	const handleStartStop = async () => {
 		if (startTime) {
@@ -123,16 +132,20 @@ const TimerSection = ({
 			handleClearForm();
 		} else {
 			setStartTime(new Date());
-			const interval = setInterval(updateTimer, 1000);
-			setTimerInterval(interval);
+			setStartTimer(true)
 		}
 	};
 
 	const handleClearForm = () => {
+		if (timerInterval) {
+			clearInterval(timerInterval);
+			setTimerInterval(null);
+		}
 		setSelectedProject(null);
 		setSelectedCategory(null);
 		setStartTime(null);
 		setTimer("00:00");
+		setStartTimer(false);
 		setTimerSeconds("00");
 		setMessage("");
 		chrome.storage.sync.remove([
@@ -149,7 +162,7 @@ const TimerSection = ({
 				onClick={() => setTab(1)}
 			>
 				<div className="flex items-center gap-x-2">
-					<img src="/images/timer.png" alt="timer" width="16px" />
+					<img src="/images/timer.png" alt="timer" width="16px"/>
 					<span className="text-sm font-medium">Temporizador</span>
 				</div>
 				<IconButtonWithTooltip
@@ -167,7 +180,7 @@ const TimerSection = ({
 						selectedItem={selectedProject}
 						onSelectItem={(value) => {
 							setSelectedProject(value);
-							chrome.storage.sync.set({ selectedProject: value });
+							chrome.storage.sync.set({selectedProject: value});
 						}}
 						placeholder="Selecciona un proyecto..."
 					/>
@@ -178,7 +191,7 @@ const TimerSection = ({
 						selectedItem={selectedCategory}
 						onSelectItem={(value) => {
 							setSelectedCategory(value);
-							chrome.storage.sync.set({ selectedCategory: value });
+							chrome.storage.sync.set({selectedCategory: value});
 						}}
 						placeholder="Selecciona una categoría..."
 					/>
