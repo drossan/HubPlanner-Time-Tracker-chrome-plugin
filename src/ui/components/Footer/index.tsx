@@ -8,7 +8,7 @@ const Footer = () => {
 			>
 				HubPlanner
 			</a>
-			<p>v1.2.6</p>
+			<p>v1.2.7</p>
 		</section>
 	);
 };
