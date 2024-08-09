@@ -1,3 +1,5 @@
+import { mdiDatabaseSyncOutline, mdiLogout } from "@mdi/js";
+import Icon from "@mdi/react";
 import { Dispatch, SetStateAction } from "react";
 
 import useReloadData from "@hooks/useReloadDatabase.ts";
@@ -49,16 +51,14 @@ const Header = ({ apiToken, setIsLoggedIn, setLoading }: HeaderProps) => {
 				<div className="flex justify-end items-center text-right">
 					<IconButtonWithTooltip
 						onClick={() => apiToken && handleReloadData(apiToken)}
-						image="images/reload_database.png"
-						alt="Sync projects and categorios"
-						width="20px"
+						iconPath={mdiDatabaseSyncOutline}
 						tooltip="Sincroniza proyectos y categorias con HubPLanner"
 					/>
 					<button
 						onClick={handleLogout}
-						className="p-2 text-red-500 text-right"
+						className="p-1 text-red-500 text-right"
 					>
-						<img src="/images/logout.png" alt="logout" width="16px" />
+						<Icon path={mdiLogout} size={0.8} className="text-red-500"/>
 					</button>
 				</div>
 			</div>

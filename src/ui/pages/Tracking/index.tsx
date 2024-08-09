@@ -141,15 +141,20 @@ const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 						timerInterval={timerInterval}
 						setTimerInterval={setTimerInterval}
 						tab={tab}
+						indexTab={1}
 						setTab={setTab}
 						setLoading={setLoading}
 					/>
 					<RecentTasksSection
 						apiToken={apiToken}
 						tab={tab}
+						indexTab={2}
 						recentTask={recentTask}
 						setTab={setTab}
 						setLoading={setLoading}
+						setStartTime={setStartTime}
+						setSelectedProject={setSelectedProject}
+						setSelectedCategory={setSelectedCategory}
 					/>
 				</>
 			)}

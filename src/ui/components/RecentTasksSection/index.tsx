@@ -1,29 +1,47 @@
-import { Dispatch, SetStateAction } from "react";
+import TitleTab from "@ui/components/TitleTab";
+import { Dispatch, SetStateAction, useCallback } from "react";
+import Icon from '@mdi/react';
+import {
+	mdiShapeOutline,
+	mdiPlayCircleOutline,
+	mdiCheck,
+	mdiSendVariantOutline,
+	mdiHistory,
+	mdiReload,
+} from '@mdi/js';
 
 import useReloadData from "@hooks/useReloadDatabase.ts";
 import {
 	DataTypesReloadData,
-	RecentTask,
+	RecentTask, StatusEntry,
 	TimeEntriesDayOfWeek,
 	TimeEntriesWeek,
-	TimeEntry,
+	TimeEntry, TimeEntryClone,
 } from "@projectTypes";
 import IconButtonWithTooltip from "@ui/components/IconButtonWithTooltip";
 
 interface RecentTasksSectionProps {
 	apiToken: string;
 	tab: number;
+	indexTab: number;
 	recentTask: RecentTask;
 	setTab: Dispatch<SetStateAction<number>>;
 	setLoading: Dispatch<SetStateAction<boolean>>;
+	setStartTime: (startTime: Date | null) => void;
+	setSelectedProject: (project: string | null) => void;
+	setSelectedCategory: (category: string | null) => void;
 }
 
 const RecentTasksSection = ({
 	apiToken,
 	tab,
+	indexTab,
 	recentTask,
 	setTab,
 	setLoading,
+	setStartTime,
+	setSelectedProject,
+	setSelectedCategory,
 }: RecentTasksSectionProps) => {
 	const reloadData = useReloadData();
 
@@ -34,7 +52,7 @@ const RecentTasksSection = ({
 			if (grouped[key]) {
 				grouped[key].minutes += entry.minutes;
 			} else {
-				grouped[key] = { ...entry };
+				grouped[key] = {...entry};
 			}
 		});
 		return Object.values(grouped);
@@ -48,7 +66,7 @@ const RecentTasksSection = ({
 
 	const formatDate = (dateString: string) => {
 		const date = new Date(dateString);
-		const options = { weekday: "long", day: "numeric", month: "long" } as const;
+		const options = {weekday: "long", day: "numeric", month: "long"} as const;
 		return date.toLocaleDateString("es-ES", options);
 	};
 
@@ -62,37 +80,49 @@ const RecentTasksSection = ({
 		});
 	};
 
+	const startTask = useCallback(({project, categoryTemplateId}: TimeEntryClone) => {
+		setSelectedProject(project)
+		setSelectedCategory(categoryTemplateId)
+		setStartTime(new Date());
+		setTab(1)
+	}, [])
+
+	const handleSubmitTask = useCallback( () => {
+		console.log('Enviar!!')
+	}, [])
+
 	return (
-		<section className="my-2 mx-4 bg-white">
+		<section className="my-1 mx-4 bg-white border  rounded">
 			<div
-				className="px-4 py-4 flex justify-between items-center gap-x-2 js-toggle cursor-pointer border rounded"
-				onClick={() => setTab(2)}
+				className="px-4 py-2 titleTab flex justify-between items-center gap-x-2 js-toggle cursor-pointer"
+				onClick={() => setTab(indexTab)}
 			>
-				<div className="flex items-center gap-x-2">
-					<img src="/images/recent-tasks.png" alt="recent-tasks" width="16px" />
-					<span className="text-sm font-medium">Tareas recientes</span>
-				</div>
+				<TitleTab
+					tab={tab}
+					indexTab={2}
+					iconPath={mdiHistory}
+					text="Tareas recientes"
+				/>
+
 				<IconButtonWithTooltip
 					onClick={() => apiToken && handleSyncRecentTask()}
-					image="images/reload.png"
-					alt="Sync recent task"
-					width="16px"
+					iconPath={mdiReload}
 					tooltip="Sincroniza tareas recientes con HubPLanner"
 				/>
 			</div>
 
 			<div
-				className={`${tab !== 2 ? "hidden" : ""} overflow-y-auto max-h-250px`}
+				className={`${tab !== indexTab ? "hidden" : ""} overflow-y-auto max-h-250px`}
 			>
 				{recentTask?.items?.length ? (
 					recentTask.items.map((timeEntriesWeek: TimeEntriesWeek) => (
 						<div
 							key={timeEntriesWeek.week}
-							className="mb-4 border border-gray-200"
+							className="mb-4 "
 						>
-							<h2 className="bg-gray-300 py-4 px-4 flex items-center justify-between">
+							<h2 className="py-2 px-4 text-sm flex items-center justify-between border-b border-gray-200">
 								{timeEntriesWeek.week}
-								<span>Total: ({timeEntriesWeek.total_time})</span>
+								<span className="bg-green-200 px-2 py-1 text-xs rounded-2xl">{timeEntriesWeek.total_time}</span>
 							</h2>
 							<ul>
 								{timeEntriesWeek.items
@@ -102,30 +132,82 @@ const RecentTasksSection = ({
 											new Date(a.day_of_week).getTime(),
 									)
 									.map((day: TimeEntriesDayOfWeek) => (
-										<li
-											key={day.day_of_week}
-											className="border-b border-gray-200"
-										>
-											<strong className="bg-gray-100 py-4 px-4 flex items-center justify-between">
+										<li key={day.day_of_week}>
+											<p
+												className="py-2 px-4 flex items-center justify-between bg-gray-100 text-xs font-light">
 												{formatDate(day.day_of_week)}
-												<span>Total: ({day.total_time})</span>
-											</strong>
-											<ul className="flex flex-col">
+												<span className="bg-gray-200 px-2 py-1 text-xs rounded-2xl">{day.total_time}</span>
+											</p>
+											<ul className="flex-col cursor-pointer">
 												{groupProjectsByCategory(day.items).map(
-													(entry: TimeEntry) => (
+													({
+														projectName,
+														project,
+														categoryName,
+														categoryTemplateId,
+														minutes,
+														status
+													}: TimeEntry) => (
 														<li
-															key={entry.projectName}
-															className="p-4 border-b border-gray-200 flex items-center justify-between"
+															key={projectName}
+															className="px-4 py-2 hover:bg-gray-50 flex items-center justify-between"
 														>
-															<div className="flex flex-col justidy-start">
-																<span>{entry.projectName}</span>
-																<span className="text-gray-300">
-																	{entry.categoryName}
-																</span>
+															<div className="flex items-center gap-x-3">
+																<button
+																	className="p-1 hover:text-green-500 border rounded-full border-transparent hover:bg-green-100"
+																	onClick={() => startTask({
+																		project,
+																		categoryTemplateId
+																	})}
+																>
+																	<Icon path={mdiPlayCircleOutline}
+																	      title="Start time"
+																	      size={.8}
+																	      className="text-green-300 cursor-pointer"
+																	/>
+																</button>
+
+																<div className="flex flex-col justidy-start">
+																	<div className="flex items-center gap-x-1">
+																		<Icon path={mdiShapeOutline}
+																		      title="Category"
+																		      size={0.5}
+																		      className="text-gray-400"
+																		/>
+																		<span className="text-gray-400">
+																		{categoryName}
+																	</span>
+																	</div>
+																	<span>{projectName}</span>
+																	{/* <div className="flex items-center gap-x-1"> */}
+																	{/* 	<Icon path={mdiCircle} size={0.5} */}
+																	{/* 	      className={status !== StatusEntry.SUBMITTED ? 'text-amber-300' : 'text-green-700'}/> */}
+																	{/* 	<span>{projectName}</span> */}
+																	{/* </div> */}
+
+																</div>
 															</div>
-															<span>
-																{minutesToHoursMinutes(entry.minutes)}
+
+															<div className="flex items-center gap-x-1">
+															<span className="flex">
+																{minutesToHoursMinutes(minutes)}
 															</span>
+																{status !== StatusEntry.SUBMITTED
+																	? <IconButtonWithTooltip
+																		onClick={handleSubmitTask}
+																		iconPath={mdiSendVariantOutline}
+																		iconColor="text-amber-300"
+																		tooltip="Completar tarea"
+																		iconRotate={-45}
+																		iconSize={.6}
+																	/>
+																	: <Icon
+																		path={mdiCheck}
+																		size={0.8}
+																		className="text-green-700"
+																	/>
+																}
+															</div>
 														</li>
 													),
 												)}

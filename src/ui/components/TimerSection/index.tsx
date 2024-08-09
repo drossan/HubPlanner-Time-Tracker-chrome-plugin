@@ -1,3 +1,4 @@
+import TitleTab from "@ui/components/TitleTab";
 import {
 	useState,
 	useEffect,
@@ -5,6 +6,8 @@ import {
 	SetStateAction,
 	useCallback,
 } from "react";
+
+import { mdiReload, mdiTimerOutline } from '@mdi/js';
 
 import useReloadData from "@hooks/useReloadDatabase.ts";
 import {
@@ -31,6 +34,7 @@ interface TimerSectionProps {
 		timerInterval: ReturnType<typeof setInterval> | null,
 	) => void;
 	tab: number;
+	indexTab: number;
 	setTab: (number: number) => void;
 	setLoading: Dispatch<SetStateAction<boolean>>;
 }
@@ -48,9 +52,11 @@ const TimerSection = ({
 	timerInterval,
 	setTimerInterval,
 	tab,
+	indexTab,
 	setTab,
 	setLoading,
 }: TimerSectionProps) => {
+
 	const [timer, setTimer] = useState<string>("00:00");
 	const [timerSeconds, setTimerSeconds] = useState<string>("00");
 	const [message, setMessage] = useState<string>("");
@@ -156,22 +162,34 @@ const TimerSection = ({
 	};
 
 	return (
-		<section className="mt-20 px-4 my-2 mx-4 bg-white border rounded">
+		<section className="mt-20 px-4 my-1 mx-4 bg-white border rounded">
 			<div
-				className="my-4 flex justify-between items-center cursor-pointer"
-				onClick={() => setTab(1)}
+				className={`${tab !== indexTab ? "cursor-pointer" : ""} my-2 flex justify-between items-center titleTab`}
+				onClick={() => setTab(indexTab)}
 			>
-				<div className="flex items-center gap-x-2">
-					<img src="/images/timer.png" alt="timer" width="16px"/>
-					<span className="text-sm font-medium">Temporizador</span>
-				</div>
-				<IconButtonWithTooltip
-					onClick={handleClearForm}
-					image="images/reload.png"
-					alt="Clear form"
-					width="16px"
-					tooltip="Resetea el formulario"
+				<TitleTab
+					tab={tab}
+					indexTab={indexTab}
+					iconPath={mdiTimerOutline}
+					text="Temporizador"
 				/>
+
+				{
+					tab === indexTab
+						? (
+							<IconButtonWithTooltip
+								onClick={handleClearForm}
+								iconPath={mdiReload}
+								tooltip="Resetea el formulario"
+							/>
+						) : (
+							<div>
+								<span className="text-xs font-light">{timer}</span>
+								<span className="text-xs text-gray-400 font-light">:{timerSeconds}</span>
+							</div>
+						)
+				}
+
 			</div>
 			<div className={tab !== 1 ? "hidden" : ""}>
 				<div className="my-4">
@@ -197,10 +215,18 @@ const TimerSection = ({
 					/>
 				</div>
 
-				<div className="flex justify-between items-center my-8 relative ">
+				<div className="my-4">
+					<textarea
+						className="w-full p-2 border border-gray-300 rounded outline-none hover:border-green-500 focus:border"
+						rows={2}
+						placeholder="Nota"
+					></textarea>
+				</div>
+
+				<div className="flex justify-between items-center my-6 relative ">
 					<button
 						onClick={handleStartStop}
-						className={`py-3 px-6 ${startTime ? "bg-red-500" : selectedProject && selectedCategory ? "bg-green-500" : "bg-gray-300"} text-white rounded-full flex items-center justify-center`}
+						className={`py-2 px-6 ${startTime ? "bg-red-500" : selectedProject && selectedCategory ? "bg-green-500" : "bg-gray-300"} text-white rounded-full flex items-center justify-center`}
 					>
 						<img
 							src={`./images/${startTime ? "stop" : "play"}.png`}
@@ -209,10 +235,10 @@ const TimerSection = ({
 						/>
 						<span className="text-lg">{startTime ? "Parar" : "Iniciar"}</span>
 					</button>
-					<span className="text-5xl text-neutral-700 font-extralight z-10">
+					<span className="text-4xl text-neutral-700 font-extralight z-10">
 						{timer}
 					</span>
-					<span className="text-8xl text-gray-100 font-light absolute -end-5 z-0">
+					<span className="text-7xl text-gray-100 font-light absolute -end-5 z-0">
 						{timerSeconds}
 					</span>
 				</div>

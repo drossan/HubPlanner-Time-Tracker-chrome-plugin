@@ -30,3 +30,13 @@
 		animation-delay: 0s;
 	}
 }
+
+.titleTab:hover {
+	> svg {
+		color: #86efac;
+	}
+
+	> span {
+		color: #404040;
+	}
+}

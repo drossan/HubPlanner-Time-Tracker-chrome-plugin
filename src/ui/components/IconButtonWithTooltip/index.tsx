@@ -1,8 +1,11 @@
+import Icon from "@mdi/react";
+
 type IconButtonWithTooltipProps = {
 	id?: string;
-	image: string;
-	alt?: string;
-	width: string;
+	iconPath: string;
+	iconSize?: number;
+	iconRotate?: number;
+	iconColor?: string;
 	tooltip: string;
 	onClick: () => void;
 	positionX?: "left" | "right" | "center";
@@ -12,9 +15,10 @@ type IconButtonWithTooltipProps = {
 const IconButtonWithTooltip = ({
 	id,
 	onClick,
-	image,
-	alt,
-	width,
+	iconPath,
+	iconSize = 0.8,
+	iconRotate = 0,
+	iconColor = "text-gray-300",
 	tooltip,
 	positionX = "left",
 	positionY = "bottom",
@@ -33,11 +37,12 @@ const IconButtonWithTooltip = ({
 
 	return (
 		<div className="relative group">
-			<button id={id} onClick={onClick} className="focus:outline-none p-2">
-				<img src={image} alt={alt} width={width} />
+			<button id={id} onClick={onClick} className="focus:outline-none p-1">
+				<Icon path={iconPath} size={iconSize} className={iconColor} rotate={iconRotate} />
 			</button>
+
 			<span
-				className={`absolute ${positionYClasses[positionY]} ${positionXClasses[positionX]} z-50 px-2 py-1 text-xs text-black border border-gray-300 bg-white rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+				className={`absolute ${positionYClasses[positionY]} ${positionXClasses[positionX]} z-50 px-2 py-1 text-[8px] text-black border border-gray-300 bg-white rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
 				style={{
 					width: "150px",
 				}}

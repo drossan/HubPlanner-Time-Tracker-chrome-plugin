@@ -1,17 +1,36 @@
+export enum ProjectTypes {
+	EVENT = "EVENT",
+	REGULAR = "REGULAR",
+}
+
+export enum StatusEntry {
+	SUBMITTED = "SUBMITTED",
+	APPROVED = "APPROVED",
+	UNSUBMITTED = "UNSUBMITTED",
+	PENDING = "PENDING",
+}
+
 export interface TimeEntry {
 	_id: string;
 	project: string;
 	projectName: string;
+	projectType: ProjectTypes;
 	date?: string;
 	minutes: number;
 	categoryTemplateId: string;
 	categoryName: string;
+	status: StatusEntry;
 }
 
 export type TimeEntryAdd = {
 	project: TimeEntry['project'];
 	date: TimeEntry['date'];
 	minutes: TimeEntry['minutes'];
+	categoryTemplateId: TimeEntry['categoryTemplateId'];
+}
+
+export type TimeEntryClone = {
+	project: TimeEntry['project'];
 	categoryTemplateId: TimeEntry['categoryTemplateId'];
 }
 
