@@ -33,7 +33,7 @@ const Header = ({ apiToken, setIsLoggedIn, setLoading }: HeaderProps) => {
 		setLoading(true);
 		reloadData({
 			apiToken: apiToken,
-			action: DataTypesReloadData.RECENT_TASK,
+			action: DataTypesReloadData.PROJECTS_AND_CATEGORIES,
 		}).finally(() => {
 			setLoading(false);
 		});
