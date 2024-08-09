@@ -21,13 +21,10 @@ específicos y categorías.
 
 ## TODO
 
-- [x] Botón para hacer reset una vez iniciado el temporizador
-- [x] Añadir loader en los botones de reset
-- [x] Tooltip para botones
-- [] Tareas recientes
+- [ ] Cuando iniciamos el temporizar hay un pequeño delay hasta que se activa el contador de tiempo
+- [ ] Añadir aviso cuando se pulsa el botón de limpiar formulario
+- [ ] Tareas recientes
     - [ ] Botón para iniciar tiempo desde una tarea reciente
-- [x] Icono para logout
-- [X] Script para autogenerar la variable API_URL
 - [ ] Mejorar el manejo de errores
 - [ ] Añadir soporte para login Google Auth
 - [ ] Optimizar el rendimiento de la extensión
@@ -36,8 +33,9 @@ específicos y categorías.
 - [ ] Action para autopublicar futuras releases
 - [ ] Hay imágenes que son más pequeñas de lo que necesitamos. Ejemplo la imagen de login, la renderizamos a16px y la
   imagen es de 14px
-- [] Actualizar punto Archivos Clave del README.md
-- [] Cuando tenemos una tarea activa y re-entramos al plugin, el tiempo tarda mucho en cargar/calcularse
+- [ ] Actualizar punto Archivos Clave del README.md
+- [ ] Recibir notificación si no se han insertado horas el día anterior
+    - También podría ser un recordatorio/resumen del trabajo del día anterior    
 
 ## Características
 
