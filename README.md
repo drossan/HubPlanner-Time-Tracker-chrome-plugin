@@ -25,6 +25,7 @@ específicos y categorías.
 - [ ] Añadir aviso cuando se pulsa el botón de limpiar formulario
 - [ ] Tareas recientes
     - [ ] Botón para iniciar tiempo desde una tarea reciente
+    - [ ] Poder hacer el submit (cambio de status UNSUBMITTED a SUBMITTED)
 - [ ] Mejorar el manejo de errores
 - [ ] Añadir soporte para login Google Auth
 - [ ] Optimizar el rendimiento de la extensión
