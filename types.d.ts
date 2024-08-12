@@ -73,6 +73,7 @@ export type Categories = Category[]
 
 export enum DataTypesReloadData {
 	'ALL' = 'all',
+	'LOGIN' = 'login',
 	'PROJECTS_AND_CATEGORIES' = 'fetchProjectsAndCategories',
 	'RECENT_TASK' = 'fetchRecentTasks',
 	'ADD_TASK' = 'addTask',
@@ -80,5 +81,16 @@ export enum DataTypesReloadData {
 }
 
 export interface ApiResponse {
-	message: string
+	status?: boolean;
+	location?: string;
+	token?: string;
+	code?: string;
+	error?: string;
+	message?: string;
+	version?: string;
+}
+
+export interface BodyLogin {
+	username: string;
+	password: string;
 }

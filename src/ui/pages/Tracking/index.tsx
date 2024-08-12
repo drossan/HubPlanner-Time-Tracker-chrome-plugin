@@ -16,11 +16,9 @@ type OptionsProps = {
 	setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 };
 
-const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
+const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 	const [loading, setLoading] = useState<boolean>(false);
 
-	const [hasDataSync, setHasDataSync] = useState<boolean>(false);
-	const [hasDataLocal, setHasDataLocal] = useState<boolean>(false);
 	const [projects, setProjects] = useState<Projects>([]);
 	const [categories, setCategories] = useState<Categories>([]);
 	const [recentTask, setRecentTask] = useState<RecentTask>({
@@ -46,8 +44,6 @@ const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 				"startTime",
 				"selectedProject",
 				"selectedCategory",
-				"projects",
-				"categories",
 			],
 			async (data) => {
 				const {
@@ -56,8 +52,6 @@ const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 					startTime: storedStartTime,
 					selectedProject: storageProject,
 					selectedCategory: storageCategory,
-					projects: storedProjects,
-					categories: storedCategories,
 				} = data;
 
 				setSelectedProject(storageProject);
@@ -71,67 +65,75 @@ const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 					setStartTime(new Date(storedStartTime));
 				}
 
-				if (storedProjects && storedCategories) {
-					setProjects(storedProjects);
-					setCategories(storedCategories);
-				} else {
-					reloadData({
-						apiToken: apiToken,
-						action: DataTypesReloadData.PROJECTS_AND_CATEGORIES,
+				chrome.storage.local.get([
+					"recentTasks",
+					"projects",
+					"categories",
+				], async (localData) => {
+					const {
+						projects: storedProjects,
+						categories: storedCategories,
+						recentTasks: storedRecentTasks,
+					} = localData;
+
+					console.log({
+						apiToken,
+						localData
 					})
-						.then(() => {
-							setHasDataSync(true);
+
+					if (!apiToken) {
+						return;
+					}
+
+
+					if (storedProjects) {
+						setProjects(storedProjects);
+					}
+
+					if (storedCategories) {
+						setCategories(storedCategories);
+					}
+
+					if (storedRecentTasks) {
+						setRecentTask(storedRecentTasks);
+					}
+
+					if (!storedProjects || !storedCategories || !storedRecentTasks) {
+						setLoading(true);
+						await reloadData({
+							apiToken: apiToken,
+							action: DataTypesReloadData.ALL,
 						})
-						.finally(() => {
-							setLoading(false);
-						});
-				}
+						setLoading(false);
+					}
+				});
 			},
 		);
-	}, [hasDataSync]);
 
-	useEffect(() => {
-		chrome.storage.local.get(["recentTasks"], async (data) => {
-			const { recentTasks: storedRecentTasks } = data;
+	}, []);
 
-			if (!apiToken) {
-				return;
-			}
-
-			if (storedRecentTasks) {
-				setRecentTask(storedRecentTasks);
-			} else {
-				reloadData({
-					apiToken,
-					action: DataTypesReloadData.RECENT_TASK,
-				})
-					.then(() => setHasDataLocal(true))
-					.finally(() => {
-						setLoading(false);
-					});
-			}
-		});
-	}, [hasDataLocal]);
 
 	useEffect(() => {
 		const handleStorageChange = (
 			changes: { [key: string]: chrome.storage.StorageChange },
 			areaName: "sync" | "local"
 		) => {
-			if (areaName === "local" && changes.recentTasks) {
-				const newRecentTasks = changes.recentTasks.newValue;
-				setRecentTask(newRecentTasks);
-			}
-
-			if (areaName === "sync") {
-				if (changes.categories) {
+			if (areaName === "local") {
+				if (changes.projects) {
 					const newProjects = changes.projects.newValue;
 					setProjects(newProjects);
 				}
+
 				if (changes.categories) {
 					const newCategories = changes.categories.newValue;
-					setProjects(newCategories);
+					setCategories(newCategories);
 				}
+
+				if (changes.recentTasks) {
+					const newRecentTasks = changes.recentTasks.newValue;
+					setRecentTask(newRecentTasks);
+				}
+
 			}
 		};
 

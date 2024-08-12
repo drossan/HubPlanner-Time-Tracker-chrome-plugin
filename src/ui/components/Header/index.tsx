@@ -12,11 +12,11 @@ type HeaderProps = {
 	setLoading: Dispatch<SetStateAction<boolean>>;
 };
 
-const Header = ({ apiToken, setIsLoggedIn, setLoading }: HeaderProps) => {
+const Header = ({apiToken, setIsLoggedIn, setLoading}: HeaderProps) => {
 	const reloadData = useReloadData();
 
 	const handleLogout = () => {
-		chrome.storage.local.remove(["recentTasks"], () => {});
+		chrome.storage.local.remove(["recentTasks", "projects", "categories"], () => {});
 		chrome.storage.sync.remove(
 			[
 				"apiToken",
@@ -51,7 +51,7 @@ const Header = ({ apiToken, setIsLoggedIn, setLoading }: HeaderProps) => {
 					<IconButtonWithTooltip
 						onClick={() => apiToken && handleReloadData(apiToken)}
 						iconPath={mdiDatabaseSyncOutline}
-						tooltip="Sincroniza proyectos y categorias con HubPLanner"
+						tooltip="Sincroniza proyectos y categorias con Hub PLanner"
 					/>
 					<button
 						onClick={handleLogout}
