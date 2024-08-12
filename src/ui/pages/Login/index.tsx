@@ -1,61 +1,51 @@
+import useReloadData from "@hooks/useReloadDatabase.ts";
+import { ApiResponse, BodyLogin, DataTypesReloadData } from "@projectTypes";
+import Loader from "@ui/components/Loader";
 import { Dispatch, SetStateAction, useState } from "react";
 
-import { API_URL } from "./../../../../share/api.ts";
 
 type LoginProps = {
 	setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
 };
 
-const Login = ({ setIsLoggedIn }: LoginProps) => {
+//@ts-ignore
+const Login = ({setIsLoggedIn}: LoginProps) => {
+	const [loading, setLoading] = useState<boolean>(false);
 	const [message, setMessage] = useState<string>("");
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 
-	const handleResponse = async (response: Response) => {
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-
-		const result = await response.json();
-
-		if (result.status) {
-			chrome.storage.sync.set(
-				{ apiToken: result["token"], userEmail: email },
-				() => {
-					console.log("Token stored in chrome.storage.sync");
-					setMessage("Login successful!");
-					setIsLoggedIn(true);
-				},
-			);
-		} else {
-			setMessage("Login failed: " + result.message);
-		}
-	};
+	const reloadData = useReloadData();
 
 	const handleLogin = async () => {
-		try {
-			const myHeaders = new Headers();
-			myHeaders.append("Content-Type", "application/json");
-
-			const requestOptions = {
-				method: "POST",
-				headers: myHeaders,
-				body: JSON.stringify({ username: email, password: password }),
-			};
-
-			const response = await fetch(`${API_URL}/login`, requestOptions);
-
-			await handleResponse(response);
-		} catch (error) {
-			setMessage("Error: " + (error as Error).message);
-		}
+		setLoading(true);
+		await reloadData({
+			apiToken: "",
+			action: DataTypesReloadData.LOGIN,
+			body: {username: email, password: password} as BodyLogin
+		})
+			.then(async (resp) => {
+				const response = resp as ApiResponse;
+				if(!response) {
+					setMessage("Login failed");
+				} else if (response?.error && response?.message) {
+					setMessage(response.message);
+				} else {
+					setMessage("Login successful!");
+					setIsLoggedIn(true);
+				}
+			})
+			.catch((err) => {
+				setMessage("Login failed: " + err.message);
+			})
+		setLoading(false);
 	};
 
 	return (
 		<main className="container mx-auto max-w-sm w-400px h-500px p-8 flex items-center justify-center">
 			<section className="px-10 py-8 border border-gray-300 rounded shadow-2xl">
 				<div className="flex items-center justify-center gap-x-1 mb-4 mt-6">
-					<img src="images/logo.png" width="40px" height="40px" />
+					<img src="images/logo.png" width="40px" height="40px"/>
 					<h2 className="text-base font-bold"> Secuoyas Experience</h2>
 				</div>
 				<div className="flex flex-col gap-y-2 mb-4">
@@ -86,6 +76,7 @@ const Login = ({ setIsLoggedIn }: LoginProps) => {
 					<div className="mt-4 text-center text-red-500">{message}</div>
 				)}
 			</section>
+			{loading && <Loader/>}
 		</main>
 	);
 };

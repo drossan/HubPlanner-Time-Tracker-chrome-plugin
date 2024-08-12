@@ -1,23 +1,47 @@
-import { DataTypesReloadData, TimeEntry, TimeEntryAdd } from "./../types.d";
+import { ApiResponse, BodyLogin, DataTypesReloadData, TimeEntry, TimeEntryAdd } from "./../types.d";
 import { API_URL } from "../share/api";
 import { callHubPlannerProxy } from "../share/callHubPlannerProxy";
 
 chrome.runtime.onInstalled.addListener(() => {
-	console.log("HubPlanner Time Tracker Extension Installed");
+	console.log("Hub Planner Time Tracker Extension Installed");
 });
 
 chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 	const {action, data} = request;
 	const {apiToken, body} = data;
 
+	const login = async (body: BodyLogin) => {
+		const userEmail = body.username;
+
+		try {
+			// Llamada a la API de login
+			const response: ApiResponse = await callHubPlannerProxy(`${API_URL}/login`, "", 'POST', body);
+
+			if (response.status) {
+				const { token: apiToken } = response;
+				chrome.storage.sync.set({ apiToken, userEmail }, () => {
+					sendResponse({ apiToken, userEmail });
+				});
+			} else {
+				sendResponse(response);
+			}
+		} catch (error) {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			//@ts-expect-error
+			sendResponse({ error: error?.message || error });
+		}
+	}
+
 	const fetchProjectsAndCategories = async () => {
 		try {
 			const projects = await callHubPlannerProxy(`${API_URL}/projects`, apiToken, 'GET');
 			const categories = await callHubPlannerProxy(`${API_URL}/categories`, apiToken, 'GET');
 
-			chrome.storage.sync.set({projects, categories}, () => {
-				sendResponse({projects, categories});
+			chrome.storage.local.set({projects: projects, categories: categories}, () => {
+				sendResponse({projects: projects, categories: categories});
 			});
+
+			sendResponse({projects: projects, categories: categories});
 		} catch (error) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			//@ts-expect-error
@@ -68,6 +92,9 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 			case DataTypesReloadData.ALL:
 				await fetchProjectsAndCategories();
 				await fetchRecentTasks();
+				break;
+			case DataTypesReloadData.LOGIN:
+				await login(body);
 				break;
 			case DataTypesReloadData.PROJECTS_AND_CATEGORIES:
 				await fetchProjectsAndCategories();
