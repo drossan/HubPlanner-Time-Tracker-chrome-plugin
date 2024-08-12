@@ -9,7 +9,7 @@ const Footer = () => {
 			>
 				Hub Planner
 			</a>
-			<a href="https://github.com/Secuoyas-Experience/HubPlanner-Time-Tracker-Chrome-Extension/releases/tag/v1.2.7"
+			<a href="https://github.com/Secuoyas-Experience/HubPlanner-Time-Tracker-Chrome-Extension/releases/tag/v1.3.0"
 			   target="_blank">v1.2.7</a>
 		</section>
 	);
