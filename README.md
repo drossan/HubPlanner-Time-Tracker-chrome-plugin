@@ -1,8 +1,8 @@
-# HubPlanner Time Tracker Chrome Extension
+# Hub Planner Time Tracker Chrome Extension
 
 ## Descripción
 
-Esta es una extensión de Chrome para realizar un seguimiento del tiempo en proyectos utilizando la API de HubPlanner. La
+Esta es una extensión de Chrome para realizar un seguimiento del tiempo en proyectos utilizando la API de Hub Planner. La
 extensión permite a los usuarios iniciar y detener un temporizador para registrar el tiempo trabajado en proyectos
 específicos y categorías.
 
@@ -36,7 +36,7 @@ específicos y categorías.
 
 - Login de usuario con usuario y contraseña.
 - Inicio y parada del temporizador.
-- Registro automático del tiempo trabajado en la API de HubPlanner.
+- Registro automático del tiempo trabajado en la API de Hub Planner.
 - Persistencia del estado del temporizador y los proyectos/categorías seleccionados.
 - Cambio del icono de la extensión cuando el temporizador está en marcha.
 
@@ -85,11 +85,11 @@ API_URL=http://localhost:1331/api/v1
 ## Uso
 
 1. Abre la extensión haciendo clic en el icono de la extensión en la barra de herramientas de Chrome.
-2. Ingresa tus credenciales de HubPlanner y haz clic en "Login".
+2. Ingresa tus credenciales de Hub Planner y haz clic en "Login".
 3. Selecciona un proyecto y una categoría de las listas desplegables.
 4. Haz clic en el botón de inicio para comenzar a registrar el tiempo. El icono de la extensión cambiará para indicar
    que el temporizador está en marcha.
-5. Haz clic en el botón de detener para detener el temporizador y registrar el tiempo trabajado en HubPlanner.
+5. Haz clic en el botón de detener para detener el temporizador y registrar el tiempo trabajado en Hub Planner.
 
 ## Estructura del Proyecto
 

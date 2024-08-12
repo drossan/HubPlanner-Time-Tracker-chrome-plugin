@@ -112,7 +112,7 @@ const RecentTasksSection = ({
 				<IconButtonWithTooltip
 					onClick={() => apiToken && handleSyncRecentTask()}
 					iconPath={mdiReload}
-					tooltip="Sincroniza tareas recientes con HubPLanner"
+					tooltip="Sincroniza tareas recientes con Hub PLanner"
 				/>
 			</div>
 

@@ -45,7 +45,7 @@ const Login = ({setIsLoggedIn}: LoginProps) => {
 		<main className="container mx-auto max-w-sm w-400px h-500px p-8 flex items-center justify-center">
 			<section className="px-10 py-8 border border-gray-300 rounded shadow-2xl">
 				<div className="flex items-center justify-center gap-x-1 mb-4 mt-6">
-					<img src="images/logo.png" width="40px" height="40px"/>
+					<img src="/images/logo.png" width="40px" height="40px" alt="logo"/>
 					<h2 className="text-base font-bold"> Secuoyas Experience</h2>
 				</div>
 				<div className="flex flex-col gap-y-2 mb-4">
