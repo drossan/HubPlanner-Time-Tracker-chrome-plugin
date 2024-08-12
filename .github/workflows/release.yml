@@ -54,9 +54,9 @@ jobs:
       - name: List files in the directory (debugging step)
         run: ls -alh
 
-      - name: Verify build-output-{version}.zip existence (debugging step)
+      - name: Verify hub-planner-plugin-{version}.zip existence (debugging step)
         run: |
-          if [ ! -f build-output-${{ env.VERSION }}.zip ]; then
+          if [ ! -f hub-planner-plugin-${{ env.VERSION }}.zip ]; then
             echo "hub-planner-plugin-${{ env.VERSION }}.zip does not exist"
             exit 1
           fi
@@ -69,6 +69,6 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build-output-${{ env.VERSION }}.zip
+          files: hub-planner-plugin-${{ env.VERSION }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
