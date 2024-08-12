@@ -44,13 +44,20 @@ jobs:
       - name: Create zip
         run: npm run build-zip
 
+      - name: Get version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+      - name: Rename zip with version
+        run: mv hub-planner-plugin.zip hub-planner-plugin-${{ env.VERSION }}.zip
+
       - name: List files in the directory (debugging step)
         run: ls -alh
 
-      - name: Verify build-output.zip existence (debugging step)
+      - name: Verify build-output-{version}.zip existence (debugging step)
         run: |
-          if [ ! -f build-output.zip ]; then
-            echo "build-output.zip does not exist"
+          if [ ! -f build-output-${{ env.VERSION }}.zip ]; then
+            echo "hub-planner-plugin-${{ env.VERSION }}.zip does not exist"
             exit 1
           fi
 
@@ -62,6 +69,6 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          files: build-output.zip
+          files: build-output-${{ env.VERSION }}.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
