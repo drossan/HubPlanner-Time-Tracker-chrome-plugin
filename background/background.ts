@@ -1,4 +1,4 @@
-import { DataTypesReloadData, TimeEntryAdd } from "./../types.d";
+import { DataTypesReloadData, TimeEntry, TimeEntryAdd } from "./../types.d";
 import { API_URL } from "../share/api";
 import { callHubPlannerProxy } from "../share/callHubPlannerProxy";
 
@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(() => {
 	console.log("HubPlanner Time Tracker Extension Installed");
 });
 
-chrome.runtime.onMessage.addListener( (request, _, sendResponse) => {
+chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 	const {action, data} = request;
 	const {apiToken, body} = data;
 
@@ -49,6 +49,20 @@ chrome.runtime.onMessage.addListener( (request, _, sendResponse) => {
 		}
 	}
 
+	const submitTask = async (timeEntryID: TimeEntry["_id"]) => {
+		try {
+			await callHubPlannerProxy(`${API_URL}/timeentry/submit/${timeEntryID}`, apiToken, 'GET')
+				.then(async () => {
+					await fetchRecentTasks()
+				})
+			sendResponse({message: "Entrada enviada con éxito"});
+		} catch (error) {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			//@ts-expect-error
+			sendResponse({error: error?.message || error});
+		}
+	}
+
 	async function processAction() {
 		switch (action) {
 			case DataTypesReloadData.ALL:
@@ -63,6 +77,9 @@ chrome.runtime.onMessage.addListener( (request, _, sendResponse) => {
 				break;
 			case DataTypesReloadData.ADD_TASK:
 				await addTask(body);
+				break;
+			case DataTypesReloadData.SUBMIT_TASK:
+				await submitTask(body);
 				break;
 		}
 	}

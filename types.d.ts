@@ -76,6 +76,7 @@ export enum DataTypesReloadData {
 	'PROJECTS_AND_CATEGORIES' = 'fetchProjectsAndCategories',
 	'RECENT_TASK' = 'fetchRecentTasks',
 	'ADD_TASK' = 'addTask',
+	'SUBMIT_TASK' = 'submitTask',
 }
 
 export interface ApiResponse {

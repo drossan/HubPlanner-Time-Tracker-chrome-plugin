@@ -33,19 +33,18 @@ const Header = ({ apiToken, setIsLoggedIn, setLoading }: HeaderProps) => {
 
 	const handleReloadData = async (apiToken: string) => {
 		setLoading(true);
-		reloadData({
+		await reloadData({
 			apiToken: apiToken,
 			action: DataTypesReloadData.PROJECTS_AND_CATEGORIES,
-		}).finally(() => {
-			setLoading(false);
-		});
+		})
+		setLoading(false);
 	};
 
 	return (
 		<section className="p-4 bg-white fixed top-0 end-0 start-0 border-b border-color-gray-100">
 			<div className="flex items-center justify-between gap-x-1 w-full">
 				<div className="flex items-center justify-center">
-					<img src="/images/logo.png" width="30px" height="30px" />
+					<img src="/images/logo.png" width="30px" height="30px" alt="logo"/>
 					<h2 className="text-base font-bold"> Secuoyas Experience</h2>
 				</div>
 				<div className="flex justify-end items-center text-right">

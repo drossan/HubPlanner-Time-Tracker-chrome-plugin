@@ -1,11 +1,10 @@
 import { useCallback } from "react";
-
-import { DataTypesReloadData, TimeEntryAdd } from "@projectTypes";
+import { DataTypesReloadData, TimeEntry, TimeEntryAdd } from "@projectTypes";
 
 type ReloadDataProps = {
 	apiToken: string;
 	action: DataTypesReloadData;
-	body?: TimeEntryAdd;
+	body?: TimeEntryAdd | TimeEntry["_id"];
 };
 
 /**
@@ -20,26 +19,38 @@ const useReloadData = () => {
 			apiToken,
 			action = DataTypesReloadData.PROJECTS_AND_CATEGORIES,
 			body,
-		}: ReloadDataProps) => {
+		}: ReloadDataProps): Promise<boolean> => {
 			try {
-				chrome.runtime.sendMessage(
-					{ action, data: { apiToken, body } },
-					(response) => {
-						if (response?.error) {
-							console.log("Error fetching data: " + response.error || response);
-							return false;
-						} else {
-							console.log("Fetched projects and categories successfully.");
-							return true;
-						}
-					},
+				const response = await new Promise<{ error?: string } | boolean>(
+					(resolve) => {
+						chrome.runtime.sendMessage(
+							{ action, data: { apiToken, body } },
+							(response) => {
+								if (chrome.runtime.lastError) {
+									console.error(chrome.runtime.lastError.message);
+									resolve(false);
+								} else {
+									resolve(response);
+								}
+							}
+						);
+					}
 				);
+
+				//@ts-ignore
+				if (response === false || (response && "error" in response)) {
+					console.error("Error fetching data:", response);
+					return false;
+				} else {
+					console.log("Fetched successfully.");
+					return true;
+				}
 			} catch (error) {
-				console.log("Error fetching user data: " + (error as Error).message);
+				console.error("Error fetching user data:", (error as Error).message);
 				return false;
 			}
 		},
-		[],
+		[]
 	);
 };
 

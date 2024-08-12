@@ -1,3 +1,5 @@
+import Icon from "@mdi/react";
+import Dialog from "@ui/components/Dialog";
 import TitleTab from "@ui/components/TitleTab";
 import {
 	useState,
@@ -7,7 +9,7 @@ import {
 	useCallback,
 } from "react";
 
-import { mdiReload, mdiTimerOutline } from '@mdi/js';
+import { mdiReload, mdiTimerOutline, mdiPlay, mdiStop } from '@mdi/js';
 
 import useReloadData from "@hooks/useReloadDatabase.ts";
 import {
@@ -61,20 +63,23 @@ const TimerSection = ({
 	const [timerSeconds, setTimerSeconds] = useState<string>("00");
 	const [message, setMessage] = useState<string>("");
 	const [startTimer, setStartTimer] = useState<boolean>(false);
+	const [isDialogOpen, setIsDialogOpen] = useState(false);
 
 	const reloadData = useReloadData();
 
+	const formatTime = (value: number) => String(value).padStart(2, "0");
+
 	const updateTimer = useCallback(() => {
 		if (startTime) {
-			const now = new Date();
-			const elapsed = Math.floor((now.getTime() - startTime.getTime()) / 1000);
+			const now = Date.now();
+			const elapsed = Math.floor((now - startTime.getTime()) / 1000);
+
 			const hours = Math.floor(elapsed / 3600);
 			const minutes = Math.floor((elapsed % 3600) / 60);
 			const seconds = elapsed % 60;
-			setTimer(
-				`${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`,
-			);
-			setTimerSeconds(`${String(seconds).padStart(2, "0")}`);
+
+			setTimer(`${formatTime(hours)}:${formatTime(minutes)}`);
+			setTimerSeconds(formatTime(seconds));
 		}
 	}, [startTime]);
 
@@ -159,6 +164,16 @@ const TimerSection = ({
 			"selectedCategory",
 			"startTime",
 		]);
+
+		handleCancel()
+	};
+
+	const handleOpen = () => {
+		setIsDialogOpen(true);
+	};
+
+	const handleCancel = () => {
+		setIsDialogOpen(false);
 	};
 
 	return (
@@ -177,11 +192,21 @@ const TimerSection = ({
 				{
 					tab === indexTab
 						? (
-							<IconButtonWithTooltip
-								onClick={handleClearForm}
-								iconPath={mdiReload}
-								tooltip="Resetea el formulario"
-							/>
+							<>
+								<IconButtonWithTooltip
+									onClick={startTime ? handleOpen : handleClearForm}
+									iconPath={mdiReload}
+									tooltip="Resetea el formulario"
+								/>
+								<Dialog
+									isOpen={isDialogOpen}
+									title="¿Estás seguro?"
+									message="Todo el progreso se perderá. ¿Deseas continuar?"
+									onConfirm={handleClearForm}
+									onCancel={handleCancel}
+								/>
+							</>
+
 						) : (
 							<div>
 								<span className="text-xs font-light">{timer}</span>
@@ -215,24 +240,24 @@ const TimerSection = ({
 					/>
 				</div>
 
-				<div className="my-4">
-					<textarea
-						className="w-full p-2 border border-gray-300 rounded outline-none hover:border-green-500 focus:border"
-						rows={2}
-						placeholder="Nota"
-					></textarea>
-				</div>
+				{/* <div className="my-4"> */}
+				{/* 	<textarea */}
+				{/* 		className="w-full p-2 border border-gray-300 rounded outline-none hover:border-green-500 focus:border" */}
+				{/* 		rows={2} */}
+				{/* 		placeholder="Nota" */}
+				{/* 	></textarea> */}
+				{/* </div> */}
 
 				<div className="flex justify-between items-center my-6 relative ">
 					<button
 						onClick={handleStartStop}
 						className={`py-2 px-6 ${startTime ? "bg-red-500" : selectedProject && selectedCategory ? "bg-green-500" : "bg-gray-300"} text-white rounded-full flex items-center justify-center`}
 					>
-						<img
-							src={`./images/${startTime ? "stop" : "play"}.png`}
-							alt="Play"
-							className="w-4 h-4 mr-2"
-						/>
+						{
+							startTime
+								? (	<Icon path={mdiStop} size={1} className="text-white mr-2" />)
+								: (	<Icon path={mdiPlay} size={1} className="text-white mr-2" />)
+						}
 						<span className="text-lg">{startTime ? "Parar" : "Iniciar"}</span>
 					</button>
 					<span className="text-4xl text-neutral-700 font-extralight z-10">

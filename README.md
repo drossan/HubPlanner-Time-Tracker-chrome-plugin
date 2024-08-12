@@ -21,19 +21,13 @@ específicos y categorías.
 
 ## TODO
 
-- [ ] Cuando iniciamos el temporizar hay un pequeño delay hasta que se activa el contador de tiempo
-- [ ] Añadir aviso cuando se pulsa el botón de limpiar formulario
-- [ ] Tareas recientes
-    - [ ] Botón para iniciar tiempo desde una tarea reciente
-    - [ ] Poder hacer el submit (cambio de status UNSUBMITTED a SUBMITTED)
-- [ ] Mejorar el manejo de errores
 - [ ] Añadir soporte para login Google Auth
-- [ ] Optimizar el rendimiento de la extensión
+- [ ] Cuando iniciamos el temporizar hay un pequeño delay hasta que se activa el contador de tiempo
+- [ ] Mejorar el manejo de errores
+- [ ] Optimizar el rendimiento de la ex**tensión
 - [ ] Agregar pruebas unitarias
 - [ ] Documentar mejor el código
-- [ ] Action para autopublicar futuras releases
-- [ ] Hay imágenes que son más pequeñas de lo que necesitamos. Ejemplo la imagen de login, la renderizamos a16px y la
-  imagen es de 14px
+- [ ] Action para autopublicar futuras releases en la chrome store
 - [ ] Actualizar punto Archivos Clave del README.md
 - [ ] Recibir notificación si no se han insertado horas el día anterior
     - También podría ser un recordatorio/resumen del trabajo del día anterior    

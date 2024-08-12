@@ -70,14 +70,13 @@ const RecentTasksSection = ({
 		return date.toLocaleDateString("es-ES", options);
 	};
 
-	const handleSyncRecentTask = () => {
+	const handleSyncRecentTask = async () => {
 		setLoading(true);
-		reloadData({
+		await reloadData({
 			apiToken: apiToken,
 			action: DataTypesReloadData.RECENT_TASK,
-		}).finally(() => {
-			setLoading(false);
-		});
+		})
+		setLoading(false);
 	};
 
 	const startTask = useCallback(({project, categoryTemplateId}: TimeEntryClone) => {
@@ -87,9 +86,15 @@ const RecentTasksSection = ({
 		setTab(1)
 	}, [])
 
-	const handleSubmitTask = useCallback( () => {
-		console.log('Enviar!!')
-	}, [])
+	const handleSubmitTask = useCallback(async (entryID: TimeEntry['_id']) => {
+		setLoading(true);
+		await reloadData({
+			apiToken: apiToken,
+			action: DataTypesReloadData.SUBMIT_TASK,
+			body: entryID,
+		})
+		setLoading(false);
+	}, [reloadData])
 
 	return (
 		<section className="my-1 mx-4 bg-white border  rounded">
@@ -122,7 +127,8 @@ const RecentTasksSection = ({
 						>
 							<h2 className="py-2 px-4 text-sm flex items-center justify-between border-b border-gray-200">
 								{timeEntriesWeek.week}
-								<span className="bg-green-200 px-2 py-1 text-xs rounded-2xl">{timeEntriesWeek.total_time}</span>
+								<span
+									className="bg-green-200 px-2 py-1 text-xs rounded-2xl">{timeEntriesWeek.total_time}</span>
 							</h2>
 							<ul>
 								{timeEntriesWeek.items
@@ -136,11 +142,13 @@ const RecentTasksSection = ({
 											<p
 												className="py-2 px-4 flex items-center justify-between bg-gray-100 text-xs font-light">
 												{formatDate(day.day_of_week)}
-												<span className="bg-gray-200 px-2 py-1 text-xs rounded-2xl">{day.total_time}</span>
+												<span
+													className="bg-gray-200 px-2 py-1 text-xs rounded-2xl">{day.total_time}</span>
 											</p>
 											<ul className="flex-col cursor-pointer">
 												{groupProjectsByCategory(day.items).map(
 													({
+														_id,
 														projectName,
 														project,
 														categoryName,
@@ -194,7 +202,7 @@ const RecentTasksSection = ({
 															</span>
 																{status !== StatusEntry.SUBMITTED
 																	? <IconButtonWithTooltip
-																		onClick={handleSubmitTask}
+																		onClick={() => handleSubmitTask(_id)}
 																		iconPath={mdiSendVariantOutline}
 																		iconColor="text-amber-300"
 																		tooltip="Completar tarea"

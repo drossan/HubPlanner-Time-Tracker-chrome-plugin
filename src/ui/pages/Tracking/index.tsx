@@ -120,7 +120,6 @@ const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 		) => {
 			if (areaName === "local" && changes.recentTasks) {
 				const newRecentTasks = changes.recentTasks.newValue;
-				console.log(newRecentTasks)
 				setRecentTask(newRecentTasks);
 			}
 
