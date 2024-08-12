@@ -114,6 +114,38 @@ const Tracking = ({ apiToken, setIsLoggedIn }: OptionsProps) => {
 	}, [hasDataLocal]);
 
 	useEffect(() => {
+		const handleStorageChange = (
+			changes: { [key: string]: chrome.storage.StorageChange },
+			areaName: "sync" | "local"
+		) => {
+			if (areaName === "local" && changes.recentTasks) {
+				const newRecentTasks = changes.recentTasks.newValue;
+				console.log(newRecentTasks)
+				setRecentTask(newRecentTasks);
+			}
+
+			if (areaName === "sync") {
+				if (changes.categories) {
+					const newProjects = changes.projects.newValue;
+					setProjects(newProjects);
+				}
+				if (changes.categories) {
+					const newCategories = changes.categories.newValue;
+					setProjects(newCategories);
+				}
+			}
+		};
+
+		//@ts-ignore
+		chrome.storage.onChanged.addListener(handleStorageChange);
+
+		return () => {
+			//@ts-ignore
+			chrome.storage.onChanged.removeListener(handleStorageChange);
+		};
+	}, []);
+
+	useEffect(() => {
 		chrome.storage.sync.set({
 			startTime: startTime?.toISOString() || null,
 		});
