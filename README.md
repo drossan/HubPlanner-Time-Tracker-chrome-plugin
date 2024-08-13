@@ -1,8 +1,33 @@
 # Hub Planner Time Tracker Chrome Extension
 
+## Índice
+
+1. [Descripción](#descripción)
+    - [Pantalla login](#pantalla-login)
+    - [Pantalla Tracking](#pantalla-tracking)
+    - [Tareas recientes](#tareas-recientes)
+2. [TODO](#todo)
+3. [Características](#características)
+4. [Instalación](#instalación)
+    - [Como desarrollador](#como-develop)
+        - [Prerrequisitos](#prerrequisitos)
+        - [Clonar el repositorio](#clonar-el-repositorio)
+        - [Instalar dependencias](#instalar-dependencias)
+        - [Compilar la extensión](#compilar-la-extensión)
+    - [Como usuario](#como-usuario)
+    - [Cargar la extensión en Chrome](#cargar-la-extensión-en-chrome)
+5. [Configuración](#configuración)
+6. [Uso](#uso)
+7. [Estructura del Proyecto](#estructura-del-proyecto)
+8. [Archivos Clave](#archivos-clave)
+9. [Compilación](#compilación)
+10. [Contribuciones](#contribuciones)
+11. [Licencia](#licencia)
+
 ## Descripción
 
-Esta es una extensión de Chrome para realizar un seguimiento del tiempo en proyectos utilizando la API de Hub Planner. La
+Esta es una extensión de Chrome para realizar un seguimiento del tiempo en proyectos utilizando la API de Hub Planner.
+La
 extensión permite a los usuarios iniciar y detener un temporizador para registrar el tiempo trabajado en proyectos
 específicos y categorías.
 
@@ -31,7 +56,7 @@ específicos y categorías.
 - [ ] Action para autopublicar futuras releases en la chrome store
 - [ ] Actualizar punto Archivos Clave del README.md
 - [ ] Recibir notificación si no se han insertado horas el día anterior
-    - También podría ser un recordatorio/resumen del trabajo del día anterior    
+    - También podría ser un recordatorio/resumen del trabajo del día anterior
 
 ## Características
 
@@ -43,29 +68,38 @@ específicos y categorías.
 
 ## Instalación
 
-### Prerrequisitos
+### Como develop
+
+#### Prerrequisitos
 
 - Node.js y npm instalados.
 - Vite instalado globalmente (`npm install -g create-vite`).
 
-### Clonar el repositorio
+#### Clonar el repositorio
 
 ```sh
 git clone git@github.com:Secuoyas-Experience/HubPlanner-Time-Tracker-Chrome-Extension.git
 cd hubplanner-time-tracker-chrome
 ```
 
-### Instalar dependencias
+#### Instalar dependencias
 
 ```sh
 npm install
 ```
 
-### Compilar la extensión
+#### Compilar la extensión
 
 ```sh
 npm run build
 ```
+
+### Como usuario
+
+Visita la sección
+de [releases](https://github.com/Secuoyas-Experience/HubPlanner-Time-Tracker-Chrome-Extension/releases) y busca la
+última versión disponible. En el apartado 'Assets', encontrarás un archivo
+llamado hub-planner-plugin-vx.x.x.zip. Descárgalo y descomprímelo en tu ordenador.
 
 ### Cargar la extensión en Chrome
 
@@ -155,13 +189,6 @@ API_URL=http://localhost:1331/api/v1
 
 > WIP
 
-## Desarrollo
-
-Para ejecutar el proyecto en modo de desarrollo, utiliza el siguiente comando:
-
-```sh
-npm run dev
-```
 
 ## Compilación
 
