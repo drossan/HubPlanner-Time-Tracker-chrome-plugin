@@ -76,11 +76,6 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 						recentTasks: storedRecentTasks,
 					} = localData;
 
-					console.log({
-						apiToken,
-						localData
-					})
-
 					if (!apiToken) {
 						return;
 					}
@@ -151,6 +146,18 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 			startTime: startTime?.toISOString() || null,
 		});
 	}, [startTime]);
+
+	useEffect(() => {
+		chrome.storage.sync.set({
+			selectedProject: selectedProject || null,
+		});
+	}, [selectedProject]);
+
+	useEffect(() => {
+		chrome.storage.sync.set({
+			selectedCategory: selectedCategory || null,
+		});
+	}, [selectedCategory]);
 
 	return (
 		<LayoutApp
