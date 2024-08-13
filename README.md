@@ -21,6 +21,7 @@ específicos y categorías.
 
 ## TODO
 
+- [ ] Dividir en componentes más pequeños el RecentTasksSectionProps
 - [ ] Añadir soporte para login Google Auth
 - [ ] Cuando iniciamos el temporizar hay un pequeño delay hasta que se activa el contador de tiempo
 - [ ] Mejorar el manejo de errores
