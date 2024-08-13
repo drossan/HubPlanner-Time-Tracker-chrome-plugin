@@ -36,12 +36,14 @@ export type TimeEntryClone = {
 
 interface TimeEntriesDayOfWeek {
 	total_time: string;
+	total_time_in_minutes: number;
 	day_of_week: string;
 	items: TimeEntry[];
 }
 
 export interface TimeEntriesWeek {
 	total_time: string;
+	total_time_in_minutes: number;
 	week: string;
 	items: TimeEntriesDayOfWeek[];
 }

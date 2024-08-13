@@ -58,10 +58,23 @@ const RecentTasksSection = ({
 		return Object.values(grouped);
 	};
 
+	const formatTime = (hours: number, minutes: number) => {
+		if (hours > 0 && minutes > 0) {
+			return `${hours}h ${minutes}m`;
+		} else if (hours > 0) {
+			return `${hours}h`;
+		} else if (minutes > 0) {
+			return `${minutes}m`;
+		} else {
+			return '0m';
+		}
+	};
+
 	const minutesToHoursMinutes = (minutes: number) => {
 		const hours = Math.floor(minutes / 60);
 		const mins = minutes % 60;
-		return `${hours}h ${mins}m`;
+
+		return formatTime(hours, mins);
 	};
 
 	const formatDate = (dateString: string) => {
@@ -128,7 +141,7 @@ const RecentTasksSection = ({
 							<h2 className="py-2 px-4 text-sm flex items-center justify-between border-b border-gray-200">
 								{timeEntriesWeek.week}
 								<span
-									className="bg-green-200 px-2 py-1 text-xs rounded-2xl">{timeEntriesWeek.total_time}</span>
+									className={`${timeEntriesWeek.total_time_in_minutes >= 1920 ? 'bg-green-200' : 'bg-amber-200' }  px-2 py-1 text-xs rounded-2xl`}>{timeEntriesWeek.total_time}</span>
 							</h2>
 							<ul>
 								{timeEntriesWeek.items
