@@ -1,10 +1,17 @@
 import { useCallback } from "react";
-import { ApiResponse, BodyLogin, DataTypesReloadData, TimeEntry, TimeEntryAdd } from "@projectTypes";
+import {
+	ApiResponse,
+	BodyLogin,
+	BodyLoginAuthGoogle,
+	DataTypesReloadData,
+	TimeEntry,
+	TimeEntryAdd
+} from "@projectTypes";
 
 type ReloadDataProps = {
 	apiToken: string;
 	action: DataTypesReloadData;
-	body?: TimeEntryAdd | TimeEntry["_id"] | BodyLogin;
+	body?: TimeEntryAdd | TimeEntry["_id"] | BodyLogin | BodyLoginAuthGoogle;
 };
 
 /**

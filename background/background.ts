@@ -1,4 +1,10 @@
-import { ApiResponse, BodyLogin, DataTypesReloadData, TimeEntry, TimeEntryAdd } from "./../types.d";
+import {
+	ApiResponse, ApiResponseAuthGoogle,
+	BodyLogin,
+	DataTypesReloadData,
+	TimeEntry,
+	TimeEntryAdd
+} from "./../types.d";
 import { API_URL } from "../share/api";
 import { callHubPlannerProxy } from "../share/callHubPlannerProxy";
 
@@ -18,9 +24,9 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 			const response: ApiResponse = await callHubPlannerProxy(`${API_URL}/login`, "", 'POST', body);
 
 			if (response.status) {
-				const { token: apiToken } = response;
-				chrome.storage.sync.set({ apiToken, userEmail }, () => {
-					sendResponse({ apiToken, userEmail });
+				const {token: apiToken} = response;
+				chrome.storage.sync.set({apiToken, userEmail}, () => {
+					sendResponse({apiToken, userEmail});
 				});
 			} else {
 				sendResponse(response);
@@ -28,8 +34,37 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 		} catch (error) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			//@ts-expect-error
-			sendResponse({ error: error?.message || error });
+			sendResponse({error: error?.message || error});
 		}
+	}
+
+	const loginAuthGoogle = async () => {
+		chrome.identity.getAuthToken({interactive: true}, async function (token) {
+			if (chrome.runtime.lastError) {
+				console.error(chrome.runtime.lastError);
+				sendResponse(`Login failed: ${chrome.runtime.lastError.message}`);
+				return;
+			}
+			if (token) {
+				try {
+					const response: ApiResponseAuthGoogle = await callHubPlannerProxy(`${API_URL}/login-google/${token}`, "", 'GET', body);
+
+					if (response.userEmail) {
+						const {token: apiToken, userEmail} = response;
+						chrome.storage.sync.set({apiToken, userEmail}, () => {
+							sendResponse({apiToken, userEmail});
+						});
+					} else {
+						sendResponse(response);
+					}
+				} catch (error) {
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+					//@ts-expect-error
+					sendResponse({error: error?.message || error});
+				}
+			}
+		});
+
 	}
 
 	const fetchProjectsAndCategories = async () => {
@@ -95,6 +130,9 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 				break;
 			case DataTypesReloadData.LOGIN:
 				await login(body);
+				break;
+			case DataTypesReloadData.LOGIN_AUTH_GOOGLE:
+				await loginAuthGoogle();
 				break;
 			case DataTypesReloadData.PROJECTS_AND_CATEGORIES:
 				await fetchProjectsAndCategories();

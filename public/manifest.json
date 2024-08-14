@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Demo: HubPlanner Time Tracker - Secuoyas Experiences",
+  "name": "Demo: Hub Planner Time Tracker - Secuoyas Experiences",
   "version": "1.4.2",
   "description": "Track your time directly from Chrome.",
   "action": {
@@ -24,5 +24,13 @@
     "js": ["assets/content.js"],
     "matches": ["<all_urls>"]
   }],
-  "permissions":["storage"]
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAra/03WJr0ZAzmtauWE+O1OUTaKistyk+Kv0xZttYN0WchImnNiN4nDjazbxgTvZiB9u5cFRj4idD/DEFwFqedpaDCWy/l8RxhkZrNgTECCS9M1A/J8+bktJtuscK0gorRZtGAngrDXVYLML9ZG/bLbyoSq++LbSVvMb/7VR4KK1n57kGROxlJGNKRUxaEsBVv44g/htqUsrPbaF2iGjdRGTaXfD8MA3Jxaj74EFxO26KV+33Lq3ZwY2BjAUhsNbC0culJKfBDseTvthKWRbhvEvl40hPmtI2fFFi0E+e1445c3Gp67QnAAdejL8pnkFWRN7NdBQHIRTcFzWZityl5QIDAQAB",
+  "oauth2": {
+    "client_id": "814717442183-u3kq1u8b4p2ptt3e5n7vtfmbr9602uos.apps.googleusercontent.com",
+    "scopes":[
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "permissions":["storage", "identity"]
 }

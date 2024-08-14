@@ -76,6 +76,7 @@ export type Categories = Category[]
 export enum DataTypesReloadData {
 	'ALL' = 'all',
 	'LOGIN' = 'login',
+	'LOGIN_AUTH_GOOGLE' = 'loginAuthGoogle',
 	'PROJECTS_AND_CATEGORIES' = 'fetchProjectsAndCategories',
 	'RECENT_TASK' = 'fetchRecentTasks',
 	'ADD_TASK' = 'addTask',
@@ -92,7 +93,20 @@ export interface ApiResponse {
 	version?: string;
 }
 
+export interface ApiResponseAuthGoogle {
+	userEmail?: boolean;
+	token?: string;
+	code?: string;
+	error?: string;
+	message?: string;
+}
+
+
 export interface BodyLogin {
 	username: string;
 	password: string;
+}
+
+export interface BodyLoginAuthGoogle {
+	idToken: string;
 }
