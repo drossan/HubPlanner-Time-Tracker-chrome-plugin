@@ -87,7 +87,7 @@ const Login = ({setIsLoggedIn}: LoginProps) => {
 
 					<button type="button"
 					        onClick={handleLoginOAuth}
-					        className="w-full text-xs flex items-center justify-center gap-4 py-2 px-6 text-sm tracking-wide text-gray-800 border border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 focus:outline-none">
+					        className="w-full flex items-center justify-center gap-4 py-2 px-6 text-xs tracking-wide text-gray-800 border border-gray-300 rounded-md bg-gray-50 hover:bg-gray-100 focus:outline-none">
 						<svg xmlns="http://www.w3.org/2000/svg" width="20px" className="inline" viewBox="0 0 512 512">
 							<path fill="#fbbd00"
 							      d="M120 256c0-25.367 6.989-49.13 19.131-69.477v-86.308H52.823C18.568 144.703 0 198.922 0 256s18.568 111.297 52.823 155.785h86.308v-86.308C126.989 305.13 120 281.367 120 256z"
