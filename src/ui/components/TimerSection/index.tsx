@@ -192,8 +192,8 @@ const TimerSection = ({
 	return (
 		<section className="mt-20 px-4 my-1 mx-4 bg-white border rounded">
 			<div
-				className={`${tab !== indexTab ? "cursor-pointer" : ""} my-2 flex justify-between items-center titleTab`}
-				onClick={() => setTab(indexTab)}
+				className="cursor-pointer my-2 flex justify-between items-center titleTab"
+				onClick={() => setTab(tab !== indexTab ? indexTab : 0)}
 			>
 				<TitleTab
 					tab={tab}

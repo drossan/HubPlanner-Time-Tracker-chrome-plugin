@@ -113,7 +113,7 @@ const RecentTasksSection = ({
 		<section className="my-1 mx-4 bg-white border  rounded">
 			<div
 				className="px-4 py-2 titleTab flex justify-between items-center gap-x-2 js-toggle cursor-pointer"
-				onClick={() => setTab(indexTab)}
+				onClick={() => setTab(tab !== indexTab ? indexTab : 0)}
 			>
 				<TitleTab
 					tab={tab}
