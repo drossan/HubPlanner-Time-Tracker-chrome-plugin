@@ -20,6 +20,7 @@ export interface TimeEntry {
 	categoryTemplateId: string;
 	categoryName: string;
 	status: StatusEntry;
+	note: string | null;
 }
 
 export type TimeEntryAdd = {
@@ -27,6 +28,7 @@ export type TimeEntryAdd = {
 	date: TimeEntry['date'];
 	minutes: TimeEntry['minutes'];
 	categoryTemplateId: TimeEntry['categoryTemplateId'];
+	note: TimeEntry['note'];
 }
 
 export type TimeEntryClone = {

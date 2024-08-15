@@ -27,6 +27,7 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 	});
 	const [selectedProject, setSelectedProject] = useState<string | null>(null);
 	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+	const [note, setNote] = useState<string | null>(null);
 	const [startTime, setStartTime] = useState<Date | null>(null);
 	const [timerInterval, setTimerInterval] = useState<NodeJS.Timeout | null>(
 		null,
@@ -44,6 +45,7 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 				"startTime",
 				"selectedProject",
 				"selectedCategory",
+				"note",
 			],
 			async (data) => {
 				const {
@@ -52,10 +54,12 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 					startTime: storedStartTime,
 					selectedProject: storageProject,
 					selectedCategory: storageCategory,
+					note: storageNote,
 				} = data;
 
 				setSelectedProject(storageProject);
 				setSelectedCategory(storageCategory);
+				setNote(storageNote);
 
 				if (!apiToken || !userEmail) {
 					return;
@@ -159,6 +163,12 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 		});
 	}, [selectedCategory]);
 
+	useEffect(() => {
+		chrome.storage.sync.set({
+			note: note || null,
+		});
+	}, [note]);
+
 	return (
 		<LayoutApp
 			apiToken={apiToken!}
@@ -184,6 +194,8 @@ const Tracking = ({apiToken, setIsLoggedIn}: OptionsProps) => {
 						indexTab={1}
 						setTab={setTab}
 						setLoading={setLoading}
+						note={note}
+						setNote={setNote}
 					/>
 					<RecentTasksSection
 						apiToken={apiToken}

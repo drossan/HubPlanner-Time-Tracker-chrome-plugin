@@ -39,6 +39,8 @@ interface TimerSectionProps {
 	indexTab: number;
 	setTab: (number: number) => void;
 	setLoading: Dispatch<SetStateAction<boolean>>;
+	note: string | null;
+	setNote: Dispatch<SetStateAction<string | null>>;
 }
 
 const TimerSection = ({
@@ -57,7 +59,13 @@ const TimerSection = ({
 	indexTab,
 	setTab,
 	setLoading,
+	note,
+	setNote
 }: TimerSectionProps) => {
+
+	console.log({
+		note: note
+	})
 
 	const [timer, setTimer] = useState<string>("00:00");
 	const [timerSeconds, setTimerSeconds] = useState<string>("00");
@@ -115,6 +123,7 @@ const TimerSection = ({
 				categoryTemplateId: selectedCategory!,
 				date: new Date().toISOString().split("T")[0],
 				minutes: duration,
+				note,
 			};
 
 			setLoading(true);
@@ -126,15 +135,17 @@ const TimerSection = ({
 					body: timeEntry,
 				}).then(() => {
 					setMessage("Entrada de tiempo registrada con éxito");
+
+					reloadData({
+						apiToken: apiToken,
+						action: DataTypesReloadData.RECENT_TASK,
+					}).finally(() => {
+						setLoading(false);
+						setStartTime(null);
+					});
 				});
 
-				reloadData({
-					apiToken: apiToken,
-					action: DataTypesReloadData.RECENT_TASK,
-				}).finally(() => {
-					setLoading(false);
-					setStartTime(null);
-				});
+
 			} catch (error) {
 				setLoading(false);
 				setMessage("Fallo al registrar la entrada de tiempo");
@@ -154,6 +165,7 @@ const TimerSection = ({
 		}
 		setSelectedProject(null);
 		setSelectedCategory(null);
+		setNote(null);
 		setStartTime(null);
 		setTimer("00:00");
 		setStartTimer(false);
@@ -162,6 +174,7 @@ const TimerSection = ({
 		chrome.storage.sync.remove([
 			"selectedProject",
 			"selectedCategory",
+			"note",
 			"startTime",
 		]);
 
@@ -240,13 +253,22 @@ const TimerSection = ({
 					/>
 				</div>
 
-				{/* <div className="my-4"> */}
-				{/* 	<textarea */}
-				{/* 		className="w-full p-2 border border-gray-300 rounded outline-none hover:border-green-500 focus:border" */}
-				{/* 		rows={2} */}
-				{/* 		placeholder="Nota" */}
-				{/* 	></textarea> */}
-				{/* </div> */}
+				<div className="my-4">
+					<textarea
+						name="note"
+						className="w-full p-2 border border-gray-300 rounded outline-none hover:border-green-500 focus:border"
+						rows={2}
+						placeholder="Nota"
+						value={note || ""}
+						onChange={e => {
+							console.log({
+								note_click: "e.target.value"
+							})
+							setNote(e.target.value);
+							chrome.storage.sync.set({note: e.target.value});
+						}}
+					></textarea>
+				</div>
 
 				<div className="flex justify-between items-center my-6 relative ">
 					<button

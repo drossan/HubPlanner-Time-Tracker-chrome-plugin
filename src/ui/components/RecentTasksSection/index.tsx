@@ -7,7 +7,7 @@ import {
 	mdiCheck,
 	mdiSendVariantOutline,
 	mdiHistory,
-	mdiReload,
+	mdiReload, mdiNote,
 } from '@mdi/js';
 
 import useReloadData from "@hooks/useReloadDatabase.ts";
@@ -167,7 +167,8 @@ const RecentTasksSection = ({
 														categoryName,
 														categoryTemplateId,
 														minutes,
-														status
+														status,
+														note
 													}: TimeEntry) => (
 														<li
 															key={projectName}
@@ -197,15 +198,19 @@ const RecentTasksSection = ({
 																		/>
 																		<span className="text-gray-400">
 																		{categoryName}
-																	</span>
+																		</span>
+																		{
+																			note && (
+																				<IconButtonWithTooltip
+																					iconPath={mdiNote}
+																					iconColor="text-gray-300"
+																					tooltip={note}
+																					positionX="center"
+																				/>
+																			)
+																		}
 																	</div>
 																	<span>{projectName}</span>
-																	{/* <div className="flex items-center gap-x-1"> */}
-																	{/* 	<Icon path={mdiCircle} size={0.5} */}
-																	{/* 	      className={status !== StatusEntry.SUBMITTED ? 'text-amber-300' : 'text-green-700'}/> */}
-																	{/* 	<span>{projectName}</span> */}
-																	{/* </div> */}
-
 																</div>
 															</div>
 
