@@ -19,6 +19,13 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 	const login = async (body: BodyLogin) => {
 		const userEmail = body.username;
 
+		if (!body.username || !body.password) {
+			sendResponse({
+				error: true,
+				message: "Los campos email y password son obligatorios",
+			});
+		}
+
 		try {
 			// Llamada a la API de login
 			const response: ApiResponse = await callHubPlannerProxy(`${API_URL}/login`, "", 'POST', body);
@@ -29,7 +36,10 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 					sendResponse({apiToken, userEmail});
 				});
 			} else {
-				sendResponse(response);
+				sendResponse({
+					error: true,
+					message: "Algo ha fallado...",
+				});
 			}
 		} catch (error) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment

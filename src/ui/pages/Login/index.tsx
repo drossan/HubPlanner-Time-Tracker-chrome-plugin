@@ -44,7 +44,7 @@ const Login = ({setIsLoggedIn}: LoginProps) => {
 	const handleLoginUserAndPassword = useCallback(async () => (await handleLogin(DataTypesReloadData.LOGIN, {
 		username: email,
 		password: password
-	})), []);
+	})), [email, password]);
 
 	const handleLoginOAuth = useCallback(async () => (await handleLogin(DataTypesReloadData.LOGIN_AUTH_GOOGLE)), []);
 
