@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Demo: Hub Planner Time Tracker - Secuoyas Experiences",
+  "name": "Demo: Hub Planner Time Tracker - Secuoyas Experience",
   "version": "1.7.0",
   "description": "Track your time directly from Chrome.",
   "action": {
