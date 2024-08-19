@@ -144,13 +144,11 @@ const RecentTasksSection = ({
 									className={`${timeEntriesWeek.total_time_in_minutes >= 1920 ? 'bg-green-200' : 'bg-amber-200' }  px-2 py-1 text-xs rounded-2xl`}>{timeEntriesWeek.total_time}</span>
 							</h2>
 							<ul>
-								{timeEntriesWeek.items
-									.sort(
+								{timeEntriesWeek.items?.length > 0 && timeEntriesWeek.items?.sort(
 										(a: TimeEntriesDayOfWeek, b: TimeEntriesDayOfWeek) =>
 											new Date(b.day_of_week).getTime() -
 											new Date(a.day_of_week).getTime(),
-									)
-									.map((day: TimeEntriesDayOfWeek) => (
+									).map((day: TimeEntriesDayOfWeek) => (
 										<li key={day.day_of_week}>
 											<p
 												className="py-2 px-4 flex items-center justify-between bg-gray-100 text-xs font-light">
