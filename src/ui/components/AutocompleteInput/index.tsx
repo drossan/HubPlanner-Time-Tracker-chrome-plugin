@@ -22,7 +22,7 @@ const AutocompleteInput = ({
 
 	useEffect(() => {
 		if (selectedItem) {
-			const selected = items.find((item) => item._id === selectedItem);
+			const selected = items?.find((item) => item._id === selectedItem);
 			if (selected) {
 				setInputValue(selected.name);
 			}
@@ -37,7 +37,7 @@ const AutocompleteInput = ({
 		setInputValue(value);
 
 		const filter = value.toLowerCase();
-		const filtered = items.filter((item) =>
+		const filtered = items?.filter((item) =>
 			item.name.toLowerCase().includes(filter),
 		);
 		setFilteredItems(filtered);
