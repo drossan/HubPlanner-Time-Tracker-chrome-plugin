@@ -79,6 +79,7 @@ export enum DataTypesReloadData {
 	'ALL' = 'all',
 	'LOGIN' = 'login',
 	'LOGIN_AUTH_GOOGLE' = 'loginAuthGoogle',
+	'REFRESH_TOKEN' = 'refreshToken',
 	'PROJECTS_AND_CATEGORIES' = 'fetchProjectsAndCategories',
 	'RECENT_TASK' = 'fetchRecentTasks',
 	'ADD_TASK' = 'addTask',
@@ -89,6 +90,7 @@ export interface ApiResponse {
 	status?: boolean;
 	location?: string;
 	token?: string;
+	refresh_token?: string;
 	code?: string;
 	error?: string;
 	message?: string;
@@ -98,6 +100,7 @@ export interface ApiResponse {
 export interface ApiResponseAuthGoogle {
 	userEmail?: boolean;
 	token?: string;
+	refresh_token?: string;
 	code?: string;
 	error?: string;
 	message?: string;

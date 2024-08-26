@@ -1,5 +1,6 @@
 import {
-	ApiResponse, ApiResponseAuthGoogle,
+	ApiResponse,
+	ApiResponseAuthGoogle,
 	BodyLogin,
 	DataTypesReloadData,
 	TimeEntry,
@@ -30,10 +31,10 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 			// Llamada a la API de login
 			const response: ApiResponse = await callHubPlannerProxy(`${API_URL}/login`, "", 'POST', body);
 
-			if (response.status) {
-				const {token: apiToken} = response;
-				chrome.storage.sync.set({apiToken, userEmail}, () => {
-					sendResponse({apiToken, userEmail});
+			if (response.token && response.refresh_token) {
+				const {token: apiToken, refresh_token: refreshToken} = response;
+				chrome.storage.sync.set({apiToken, refreshToken, userEmail}, () => {
+					sendResponse({apiToken, refreshToken, userEmail});
 				});
 			} else {
 				sendResponse({
@@ -60,9 +61,9 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 					const response: ApiResponseAuthGoogle = await callHubPlannerProxy(`${API_URL}/login-google/${token}`, "", 'GET', body);
 
 					if (response.userEmail) {
-						const {token: apiToken, userEmail} = response;
-						chrome.storage.sync.set({apiToken, userEmail}, () => {
-							sendResponse({apiToken, userEmail});
+						const {token: apiToken, refresh_token: refreshToken, userEmail} = response;
+						chrome.storage.sync.set({apiToken, refreshToken, userEmail}, () => {
+							sendResponse({apiToken, refreshToken, userEmail});
 						});
 					} else {
 						sendResponse(response);
@@ -74,7 +75,36 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 				}
 			}
 		});
+	}
 
+	const refreshJWTToken = async () => {
+		try {
+			chrome.storage.sync.get(
+				["refreshToken",],
+				async (data) => {
+					const {refreshToken} = data;
+
+					const response: ApiResponse = await callHubPlannerProxy(`${API_URL}/refresh-token/${refreshToken}`, "", 'GET');
+
+					if (response.token && response.refresh_token) {
+						const {token: apiToken, refresh_token: refreshToken} = response;
+						chrome.storage.sync.set({apiToken, refreshToken}, () => {
+							sendResponse({apiToken, refreshToken});
+						});
+					} else {
+						sendResponse({
+							error: true,
+							message: "Algo ha fallado...",
+							response
+						});
+					}
+				}
+			);
+		} catch (error) {
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			//@ts-expect-error
+			sendResponse({error: error?.message || error});
+		}
 	}
 
 	const fetchProjectsAndCategories = async () => {
@@ -140,6 +170,9 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 				break;
 			case DataTypesReloadData.LOGIN:
 				await login(body);
+				break;
+			case DataTypesReloadData.REFRESH_TOKEN:
+				await refreshJWTToken();
 				break;
 			case DataTypesReloadData.LOGIN_AUTH_GOOGLE:
 				await loginAuthGoogle();

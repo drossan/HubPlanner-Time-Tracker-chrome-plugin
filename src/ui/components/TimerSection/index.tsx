@@ -63,10 +63,6 @@ const TimerSection = ({
 	setNote
 }: TimerSectionProps) => {
 
-	console.log({
-		note: note
-	})
-
 	const [timer, setTimer] = useState<string>("00:00");
 	const [timerSeconds, setTimerSeconds] = useState<string>("00");
 	const [message, setMessage] = useState<string>("");
