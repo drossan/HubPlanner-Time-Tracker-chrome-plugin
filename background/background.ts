@@ -141,6 +141,7 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 		try {
 			await callHubPlannerProxy(`${API_URL}/timeentry`, apiToken, 'POST', timeEntry);
 			sendResponse({message: "Entrada de tiempo registrada con éxito"});
+			await refreshJWTToken()
 		} catch (error) {
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			//@ts-expect-error
