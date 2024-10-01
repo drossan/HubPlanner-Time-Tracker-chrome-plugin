@@ -84,7 +84,7 @@ chrome.runtime.onMessage.addListener((request, _, sendResponse) => {
 				async (data) => {
 					const {refreshToken} = data;
 
-					const response: ApiResponse = await callHubPlannerProxy(`${API_URL}/refresh-token/${refreshToken}`, "", 'GET');
+					const response: ApiResponse = await callHubPlannerProxy(`${API_URL}/refresh-token/${refreshToken}`, apiToken, 'GET');
 
 					if (response.token && response.refresh_token) {
 						const {token: apiToken, refresh_token: refreshToken} = response;
